@@ -1,6 +1,7 @@
 import React from 'react';
 import SectionWrapper, { FadeIn } from './SectionWrapper';
 import { Target, Zap, Shield, Users, Award, Code2 as Code } from 'lucide-react';
+import AnimeCard from './AnimeCard';
 
 const reasons = [
   {
@@ -38,9 +39,6 @@ const reasons = [
 const WhyHireMe = () => {
   return (
     <SectionWrapper id="why-hire-me" className="bg-sub relative overflow-hidden">
-      {/* Organic Background Elements */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] -z-10 animate-blob" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px] -z-10 animate-blob [animation-delay:2s]" />
       
       <div className="flex flex-col md:flex-row gap-16 items-center relative z-10">
         
@@ -61,17 +59,25 @@ const WhyHireMe = () => {
           {reasons.map((reason, index) => (
             <FadeIn 
               key={reason.title} 
-              delay={0.1 * index}
+              delay={0.08 * index}
               direction="up"
-              className="group glass-card p-8 border-border-subtle hover:border-primary/20 hover:shadow-organic transition-all bouncy"
+              className="h-full"
             >
-              <div className="mb-6 inline-flex p-4 rounded-2xl bg-surface text-primary group-hover:bg-primary group-hover:text-white group-hover:glow-primary transition-all duration-500">
-                {reason.icon}
-              </div>
-              <h3 className="text-2xl font-black text-main mb-3 tracking-tight">{reason.title}</h3>
-              <p className="text-sub/80 leading-relaxed font-light">
-                {reason.description}
-              </p>
+              <AnimeCard
+                maxTilt={8}
+                scale={1.03}
+                className="glass-card p-8 h-full border border-border-subtle hover:border-primary/30 hover:shadow-organic transition-colors rounded-[2rem]"
+              >
+                <div className="mb-6 inline-flex p-4 rounded-2xl bg-surface text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-sm group-hover:scale-110">
+                  {reason.icon}
+                </div>
+                <h3 className="text-2xl font-black text-main mb-3 tracking-tight group-hover:text-primary transition-colors">
+                  {reason.title}
+                </h3>
+                <p className="text-sub/80 leading-relaxed font-light">
+                  {reason.description}
+                </p>
+              </AnimeCard>
             </FadeIn>
           ))}
         </div>

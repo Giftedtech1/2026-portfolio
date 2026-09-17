@@ -1,68 +1,166 @@
-import React from 'react';
-import SectionWrapper, { FadeIn } from './SectionWrapper';
-import { motion } from 'framer-motion';
+import React, { useRef, useEffect } from 'react';
+import { Code2, Database, Wrench, Cloud } from 'lucide-react';
+import { animate, stagger } from 'animejs';
+import { useAnimeCardTilt } from '../hooks/useAnimeCardTilt';
+import ScrollReveal from './ScrollReveal';
 
-const skills = [
-  { name: "Crafting Interfaces", level: 95, color: "from-primary/80 to-primary" },
-  { name: "React Storytelling", level: 92, color: "from-accent/80 to-accent" },
-  { name: "Styling with Care", level: 95, color: "from-primary/80 to-primary" },
-  { name: "Connecting Data", level: 85, color: "from-accent/80 to-accent" },
-  { name: "Responsive Focus", level: 98, color: "from-primary/80 to-primary" },
-  { name: "Human-Centric UX", level: 90, color: "from-accent/80 to-accent" },
+const skillCategories = [
+  {
+    title: "Frontend Development",
+    icon: <Code2 size={20} className="text-[#7DA0CA]" />,
+    description: "Building responsive, accessible, and performant user interfaces with modern component architectures.",
+    skills: [
+      { name: "React", detail: "Hooks, Context, Component Patterns, Lifecycle Optimization" },
+      { name: "JavaScript (ESNext)", detail: "Modern asynchronous workflows, DOM APIs, Closures" },
+      { name: "TypeScript", detail: "Type safety, Interface contracts, Generics" },
+      { name: "Next.js", detail: "App Router, SSR, Server Components, API routes" },
+      { name: "Tailwind CSS", detail: "Design systems, Custom theme tokens, Utility-first CSS" },
+      { name: "HTML5 & CSS3", detail: "Semantic markup, WCAG accessibility, Grid & Flexbox" }
+    ]
+  },
+  {
+    title: "Backend / Data",
+    icon: <Database size={20} className="text-[#7DA0CA]" />,
+    description: "Architecting backend integrations, data models, real-time synchronization, and authentication gates.",
+    skills: [
+      { name: "Supabase", detail: "PostgreSQL, Realtime subscriptions, Row Level Security" },
+      { name: "Firebase", detail: "Firestore, Authentication, Hosting, Security Rules" },
+      { name: "REST APIs", detail: "Endpoint consumption, Error boundaries, Webhooks" },
+      { name: "Authentication", detail: "Session tokens, OAuth providers, Protected routes" },
+      { name: "Databases", detail: "Relational schema design, Querying, Document stores" }
+    ]
+  },
+  {
+    title: "Cloud & DevOps",
+    icon: <Cloud size={20} className="text-[#7DA0CA]" />,
+    description: "Cloud infrastructure provisioning, container isolation, orchestration, and continuous integration.",
+    skills: [
+      { name: "AWS", detail: "EC2, S3, CloudFront CDN, Lambda serverless, IAM role policies" },
+      { name: "Microsoft Azure", detail: "App Services, Azure DevOps pipelines, Blob Storage" },
+      { name: "Docker", detail: "Multi-stage Dockerfiles, compose environments, image optimization" },
+      { name: "Kubernetes", detail: "Pod lifecycle, deployments, ingress, service discovery" }
+    ]
+  },
+  {
+    title: "Tools & Engineering",
+    icon: <Wrench size={20} className="text-[#7DA0CA]" />,
+    description: "Modern developer workflow tools, version control discipline, and interface inspection.",
+    skills: [
+      { name: "Git & GitHub", detail: "Branching strategies, Pull requests, Semantic releases" },
+      { name: "Vite", detail: "Build tooling, Hot module replacement, Bundling" },
+      { name: "Chrome DevTools", detail: "Network profiling, Performance audits, DOM debugging" },
+      { name: "VS Code", detail: "Custom extensions, Linting, Debugging environments" },
+      { name: "Figma", detail: "Design-to-code translation, Spec measurement, Assets" }
+    ]
+  }
 ];
+
+/** Single skill card with 3D tilt */
+const SkillCard = ({ category }) => {
+  const cardRef = useAnimeCardTilt({ maxTilt: 6, scale: 1.02, perspective: 1100 });
+  const skillListRef = useRef(null);
+
+  // Stagger individual skill rows when card enters view
+  useEffect(() => {
+    const list = skillListRef.current;
+    if (!list) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const rows = list.querySelectorAll('.skill-row');
+    rows.forEach((r) => {
+      r.style.opacity = '0';
+      r.style.transform = 'translateX(-12px)';
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          animate(rows, {
+            opacity: [0, 1],
+            translateX: [-12, 0],
+            delay: stagger(55, { start: 200 }),
+            duration: 550,
+            ease: 'outCubic',
+          });
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.25 }
+    );
+    observer.observe(list);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={cardRef}
+      className="rounded-lg bg-[#052659]/30 border border-[#5483B3]/25 p-5 sm:p-6 md:p-8 flex flex-col justify-between hover:border-[#7DA0CA]/45 transition-colors"
+      style={{ willChange: 'transform' }}
+    >
+      <div>
+        <div className="flex items-center gap-3 mb-3 sm:mb-4">
+          <div className="p-2 rounded bg-[#021024] border border-[#5483B3]/30">
+            {category.icon}
+          </div>
+          <h3 className="text-base sm:text-lg font-bold text-[#C1E8FF] tracking-tight">
+            {category.title}
+          </h3>
+        </div>
+
+        <p className="text-xs text-[#7DA0CA] mb-5 sm:mb-6 leading-relaxed">
+          {category.description}
+        </p>
+
+        <div ref={skillListRef} className="space-y-3.5 pt-4 border-t border-[#052659]">
+          {category.skills.map((skill) => (
+            <div key={skill.name} className="group skill-row">
+              <div className="text-xs sm:text-sm font-mono font-medium text-[#C1E8FF]">
+                <span>{skill.name}</span>
+              </div>
+              <p className="text-[11px] sm:text-xs text-[#7DA0CA]/80 mt-0.5 font-sans leading-snug">
+                {skill.detail}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+    </div>
+  );
+};
 
 const Skills = () => {
   return (
-    <SectionWrapper id="skills" className="bg-main py-24 md:py-32 overflow-hidden relative">
-      <div className="absolute top-1/2 right-[-10%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] -z-10" />
-      
-      <div className="max-w-3xl mb-20">
-        <FadeIn direction="up">
-          <h2 className="text-4xl md:text-6xl font-black text-main mb-8 leading-tight">
-            My <span className="text-gradient italic">toolbelt.</span>
-          </h2>
-          <p className="text-sub/80 text-lg md:text-xl font-light max-w-2xl leading-relaxed">
-            These are the tools I use to bring ideas to life. I don't just learn syntax; I learn how to use these tools to create better experiences for everyone.
-          </p>
-        </FadeIn>
-      </div>
+    <section id="skills" className="py-20 sm:py-24 md:py-32 bg-[#021024] border-b border-[#052659]">
+      <div className="max-w-6xl mx-auto px-5 sm:px-6">
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 max-w-6xl">
-        {skills.map((skill, index) => (
-          <FadeIn 
-            key={skill.name} 
-            delay={0.1 * index}
-            direction="up"
-            className="relative"
-          >
-            <div className="flex justify-between items-end mb-4">
-              <h3 className="text-xl font-bold text-main tracking-tight">{skill.name}</h3>
-              <span className="text-sm font-black text-accent tracking-widest">{skill.level}%</span>
+        {/* Section Header */}
+        <ScrollReveal direction="up" distance={24} delayStep={80} duration={700} ease="outExpo" threshold={0.3}>
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 pb-6 border-b border-[#052659]">
+            <div>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#C1E8FF] tracking-tight reveal-item">
+                Skills & Proficiencies
+              </h2>
             </div>
-            
-            {/* Progress Bar Background */}
-            <div className="w-full h-4 bg-accent/5 rounded-2xl overflow-hidden border border-accent/5 p-1">
-              {/* Animated Progress Bar Fill */}
-              <motion.div
-                initial={{ width: 0 }}
-                whileInView={{ width: `${skill.level}%` }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.5, delay: 0.2 + (index * 0.1), ease: [0.34, 1.56, 0.64, 1] }}
-                className={`h-full rounded-xl bg-gradient-to-r ${skill.color} shadow-sm relative`}
-              >
-                 <div className="absolute top-0 right-0 w-8 h-full bg-white/20 skew-x-12 translate-x-4 blur-sm" />
-              </motion.div>
-            </div>
-          </FadeIn>
-        ))}
+            <p className="text-xs sm:text-sm font-mono text-[#7DA0CA] mt-3 md:mt-0 max-w-md reveal-item">
+              Grounded in core web technologies, modern frameworks, and production-tested toolchains.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        {/* 4-Column Categorized Directory */}
+        <ScrollReveal direction="up" distance={40} delayStep={130} duration={850} ease="outExpo" threshold={0.1}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+            {skillCategories.map((category) => (
+              <div key={category.title} className="reveal-item">
+                <SkillCard category={category} />
+              </div>
+            ))}
+          </div>
+        </ScrollReveal>
+
       </div>
-      
-      <FadeIn delay={0.8} direction="up" className="mt-20 p-8 rounded-[2.5rem] bg-accent/5 border border-accent/10">
-        <p className="text-main/80 text-center font-medium italic">
-          "The best tool is the one that helps the most humans."
-        </p>
-      </FadeIn>
-    </SectionWrapper>
+    </section>
   );
 };
 

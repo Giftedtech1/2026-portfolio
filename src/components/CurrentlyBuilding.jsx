@@ -1,6 +1,7 @@
 import React from 'react';
 import SectionWrapper, { FadeIn } from './SectionWrapper';
 import { Activity, Clock, Code2, Database } from 'lucide-react';
+import AnimeCard from './AnimeCard';
 
 const activeProjects = [
   {
@@ -48,21 +49,32 @@ const CurrentlyBuilding = () => {
             {activeProjects.map((item, index) => (
               <FadeIn 
                 key={index} 
-                delay={0.2 + (index * 0.1)} 
+                delay={0.15 + (index * 0.08)} 
                 direction="left"
-                className="glass-card p-4 md:p-5 rounded-xl border border-border-subtle flex items-center gap-4 hover:border-primary/20 transition-all group shadow-sm hover:shadow-md"
               >
-                <div className="w-10 h-10 rounded-full bg-surface flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-inner">
-                  {item.icon}
-                </div>
-                <div>
-                  <h4 className="text-base md:text-lg font-semibold text-main group-hover:text-primary transition-colors leading-snug">
-                    {item.title}
-                  </h4>
-                  <p className="text-xs md:text-sm font-medium text-muted mt-0.5">
-                    {item.status}
-                  </p>
-                </div>
+                <AnimeCard
+                  maxTilt={5}
+                  scale={1.02}
+                  className="glass-card p-4 md:p-5 rounded-2xl border border-border-subtle hover:border-primary/30 flex items-center gap-4 transition-colors group shadow-sm hover:shadow-organic"
+                >
+                  <div className="w-12 h-12 rounded-2xl bg-surface flex items-center justify-center shrink-0 group-hover:scale-110 transition-all duration-300 shadow-inner">
+                    {item.icon}
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-base md:text-lg font-semibold text-main group-hover:text-primary transition-colors leading-snug">
+                      {item.title}
+                    </h4>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                      </span>
+                      <p className="text-xs md:text-sm font-medium text-muted">
+                        {item.status}
+                      </p>
+                    </div>
+                  </div>
+                </AnimeCard>
               </FadeIn>
             ))}
           </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import SectionWrapper, { FadeIn } from './SectionWrapper';
 import { PenTool, Smartphone, Zap, Heart, Layout, Coffee } from 'lucide-react';
+import AnimeCard from './AnimeCard';
 
 const services = [
   {
@@ -56,22 +57,28 @@ const Services = () => {
         {services.map((service, index) => (
           <FadeIn 
             key={service.title} 
-            delay={0.1 * index}
+            delay={0.08 * index}
             direction="up"
-            className="group"
+            className="h-full"
           >
-            <div className="h-full glass-card p-10 border-border-subtle hover:border-primary/20 transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full -z-10 transition-transform group-hover:scale-110" />
+            <AnimeCard
+              maxTilt={8}
+              scale={1.03}
+              className="h-full glass-card p-10 border border-border-subtle hover:border-primary/30 transition-colors relative overflow-hidden rounded-[2rem] shadow-sm hover:shadow-organic"
+            >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full -z-10 transition-transform group-hover:scale-125 duration-500" />
               
-              <div className="mb-8 inline-flex p-4 rounded-2xl bg-white/50 dark:bg-white/5 border border-white/20 text-primary group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all shadow-sm">
+              <div className="mb-8 inline-flex p-4 rounded-2xl bg-white/50 dark:bg-white/5 border border-white/20 text-primary group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all shadow-sm duration-300">
                 {React.cloneElement(service.icon, { size: 28 })}
               </div>
               
-              <h3 className="text-2xl font-black text-main mb-4 tracking-tight">{service.title}</h3>
+              <h3 className="text-2xl font-black text-main mb-4 tracking-tight group-hover:text-primary transition-colors">
+                {service.title}
+              </h3>
               <p className="text-sub/80 text-base leading-relaxed font-light">
                 {service.description}
               </p>
-            </div>
+            </AnimeCard>
           </FadeIn>
         ))}
       </div>

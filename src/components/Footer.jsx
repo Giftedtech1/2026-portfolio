@@ -1,69 +1,61 @@
 import React from 'react';
-import { Github, Linkedin, Mail, Heart } from 'lucide-react';
+import { Github, Linkedin, Mail, ArrowUp } from 'lucide-react';
+import { useMagneticHover } from '../hooks/useMagneticHover';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const backToTopRef = useMagneticHover({ strength: 0.25 });
 
   return (
-    <footer className="bg-main border-t border-border-subtle/50 pt-20 pb-12 overflow-hidden relative">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
-      
-      <div className="container mx-auto px-6 md:px-12">
-        <div className="flex flex-col md:flex-row justify-between items-center md:items-start gap-12">
-          
-          <div className="text-center md:text-left">
-            <a href="#" className="inline-block text-3xl font-black text-main mb-6 tracking-tighter">
-              Gifted<span className="text-primary italic">tech</span>
+    <footer className="bg-[#021024] border-t border-[#052659] py-10 sm:py-12 text-xs font-mono">
+      <div className="max-w-6xl mx-auto px-5 sm:px-6">
+        
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 sm:gap-8 pb-6 sm:pb-8 border-b border-[#052659]">
+          <div>
+            <div className="text-sm font-bold text-[#C1E8FF] mb-1">
+              Ogunleye Precious · Giftedtech
+            </div>
+            <div className="text-[#7DA0CA] text-xs">
+              Frontend & Product Engineer · Lagos, Nigeria
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[#7DA0CA]">
+            <a href="#work" className="hover:text-[#C1E8FF] transition-colors min-h-[36px] flex items-center">Work</a>
+            <a href="#experience" className="hover:text-[#C1E8FF] transition-colors min-h-[36px] flex items-center">Experience</a>
+            <a href="#skills" className="hover:text-[#C1E8FF] transition-colors min-h-[36px] flex items-center">Skills</a>
+            <a href="#interactive-lab" className="hover:text-[#C1E8FF] transition-colors min-h-[36px] flex items-center">Labs</a>
+            <a href="#about" className="hover:text-[#C1E8FF] transition-colors min-h-[36px] flex items-center">About</a>
+            <a href="#contact" className="hover:text-[#C1E8FF] transition-colors min-h-[36px] flex items-center">Contact</a>
+            <a href="https://github.com/Giftedtech1" target="_blank" rel="noreferrer" className="hover:text-[#C1E8FF] transition-colors min-h-[36px] flex items-center">GitHub</a>
+            <a href="https://www.linkedin.com/in/giftedtech-precious-a46421249" target="_blank" rel="noreferrer" className="hover:text-[#C1E8FF] transition-colors min-h-[36px] flex items-center">LinkedIn</a>
+          </div>
+        </div>
+
+        <div className="pt-6 sm:pt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-[#5483B3]">
+          <div className="text-[11px] sm:text-xs">
+            © {currentYear} Ogunleye Precious. All rights reserved.
+          </div>
+
+          <div className="flex items-center gap-4 text-[11px] sm:text-xs">
+            <span>UTC+1 (WAT)</span>
+            <span>·</span>
+            <a
+              ref={backToTopRef}
+              href="#"
+              className="hover:text-[#C1E8FF] transition-colors min-h-[44px] flex items-center gap-1.5 px-2.5 -mr-2.5 rounded hover:bg-[#052659]/40"
+              style={{ willChange: 'transform' }}
+              aria-label="Scroll back to top"
+            >
+              <span>Back to top</span>
+              <ArrowUp size={13} />
             </a>
-            <p className="text-sub/80 max-w-sm text-base md:text-lg font-light leading-relaxed">
-              I believe in building digital spaces that feel less like code and more like home. Let's make the web a warmer place, one pixel at a time.
-            </p>
-          </div>
-
-          <div className="flex flex-col items-center md:items-end gap-8">
-            <div className="flex gap-4">
-              <SocialLink href="https://github.com/Giftedtech1" icon={<Github size={20} />} />
-              <SocialLink href="https://www.linkedin.com/in/giftedtech-precious-a46421249" icon={<Linkedin size={20} />} />
-              <SocialLink href="mailto:Giftedisprecious@gmail.com" icon={<Mail size={20} />} />
-            </div>
-            
-            <div className="flex flex-wrap items-center justify-center md:justify-end gap-x-8 gap-y-4 text-sm font-black text-accent uppercase tracking-widest">
-              {['About', 'Projects', 'Services', 'Contact'].map(link => (
-                <a key={link} href={`#${link.toLowerCase()}`} className="hover:text-primary transition-colors duration-300">
-                  {link}
-                </a>
-              ))}
-            </div>
           </div>
         </div>
 
-        <div className="mt-20 pt-10 border-t border-border-subtle/30 flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex items-center gap-2 text-sub/60 text-sm font-medium">
-            <span>© {currentYear} Ogunleye Precious.</span>
-            <span className="flex items-center gap-1">
-              Built with <Heart size={14} className="text-primary fill-primary" /> in Lagos.
-            </span>
-          </div>
-          
-          <div className="flex items-center gap-8">
-            <a href="#" className="text-muted/60 hover:text-primary text-xs font-bold uppercase tracking-widest transition-colors">Privacy</a>
-            <a href="#" className="text-muted/60 hover:text-primary text-xs font-bold uppercase tracking-widest transition-colors">Terms</a>
-          </div>
-        </div>
       </div>
     </footer>
   );
 };
-
-const SocialLink = ({ href, icon }) => (
-  <a 
-    href={href} 
-    target="_blank" 
-    rel="noreferrer" 
-    className="w-12 h-12 rounded-2xl bg-accent/5 flex items-center justify-center text-accent hover:bg-primary hover:text-white transition-all duration-500 shadow-sm hover:shadow-xl hover:shadow-primary/20 hover:-translate-y-1"
-  >
-    {icon}
-  </a>
-);
 
 export default Footer;

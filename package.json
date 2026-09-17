@@ -11,8 +11,11 @@
   },
   "dependencies": {
     "@formspree/react": "^3.0.0",
+    "@webcallhub/widget": "^1.0.2",
+    "animejs": "^4.5.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.34.3",
+    "lenis": "^1.3.26",
     "lucide-react": "^0.575.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

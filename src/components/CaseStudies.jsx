@@ -1,6 +1,7 @@
 import React from 'react';
 import SectionWrapper, { FadeIn } from './SectionWrapper';
 import { ArrowRight, CheckCircle2, Target, Lightbulb, PenTool, LayoutTemplate } from 'lucide-react';
+import AnimeCard from './AnimeCard';
 
 const CaseStudies = () => {
   const caseStudy = {
@@ -31,7 +32,11 @@ const CaseStudies = () => {
       </div>
 
       <FadeIn delay={0.2} direction="up" className="max-w-5xl mx-auto px-4 md:px-0">
-        <div className="glass-card p-1 rounded-3xl border border-border-subtle relative overflow-hidden group">
+        <AnimeCard
+          maxTilt={4}
+          scale={1.01}
+          className="glass-card p-1 rounded-3xl border border-border-subtle hover:border-primary/30 relative overflow-hidden group shadow-lg hover:shadow-organic"
+        >
           <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 blur-[80px] rounded-full pointer-events-none group-hover:bg-primary/20 transition-colors"></div>
           
           <div className="bg-sub/80 backdrop-blur-sm rounded-[22px] p-6 md:p-12 relative z-10">
@@ -126,7 +131,7 @@ const CaseStudies = () => {
               </div>
             </div>
           </div>
-        </div>
+        </AnimeCard>
       </FadeIn>
     </SectionWrapper>
   );

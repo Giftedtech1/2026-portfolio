@@ -1,6 +1,7 @@
 import React from 'react';
 import SectionWrapper, { FadeIn } from './SectionWrapper';
 import { Heart, Stars } from 'lucide-react';
+import AnimeCard from './AnimeCard';
 
 const testimonials = [
   {
@@ -44,30 +45,36 @@ const Testimonials = () => {
         {testimonials.map((t, index) => (
           <FadeIn 
             key={index} 
-            delay={0.2 * index}
+            delay={0.15 * index}
             direction="up"
-            className="glass-card p-10 border-border-subtle relative group flex flex-col"
+            className="h-full"
           >
-            <div className="mb-8 flex justify-between items-start">
-              <div className="flex gap-1 text-accent/40 group-hover:text-accent transition-colors duration-500">
-                <Stars size={24} />
+            <AnimeCard
+              maxTilt={7}
+              scale={1.025}
+              className="glass-card p-10 border border-border-subtle hover:border-primary/30 relative flex flex-col h-full rounded-[2rem] shadow-sm hover:shadow-organic transition-colors"
+            >
+              <div className="mb-8 flex justify-between items-start">
+                <div className="flex gap-1 text-accent/50 group-hover:text-accent transition-colors duration-500">
+                  <Stars size={24} />
+                </div>
+                <Heart size={24} className="text-primary/30 group-hover:text-primary transition-colors duration-500" />
               </div>
-              <Heart size={24} className="text-primary/20 group-hover:text-primary transition-colors duration-500" />
-            </div>
 
-            <p className="text-main/90 font-light italic mb-10 text-lg leading-relaxed flex-1">
-              "{t.quote}"
-            </p>
+              <p className="text-main/90 font-light italic mb-10 text-lg leading-relaxed flex-1">
+                "{t.quote}"
+              </p>
 
-            <div className="flex items-center gap-5 pt-8 border-t border-border-subtle/50">
-              <div className={`w-14 h-14 rounded-2xl ${t.avatar} flex items-center justify-center text-main font-black text-xl shadow-inner`}>
-                {t.author.charAt(0)}
+              <div className="flex items-center gap-5 pt-8 border-t border-border-subtle/50">
+                <div className={`w-14 h-14 rounded-2xl ${t.avatar} flex items-center justify-center text-main font-black text-xl shadow-inner`}>
+                  {t.author.charAt(0)}
+                </div>
+                <div>
+                  <h4 className="font-bold text-main tracking-tight text-lg">{t.author}</h4>
+                  <p className="text-sm font-medium text-accent uppercase tracking-widest">{t.role}</p>
+                </div>
               </div>
-              <div>
-                <h4 className="font-bold text-main tracking-tight text-lg">{t.author}</h4>
-                <p className="text-sm font-medium text-accent uppercase tracking-widest">{t.role}</p>
-              </div>
-            </div>
+            </AnimeCard>
           </FadeIn>
         ))}
       </div>

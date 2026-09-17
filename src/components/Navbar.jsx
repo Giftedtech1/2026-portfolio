@@ -1,164 +1,258 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X, Moon, Sun } from 'lucide-react';
-import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { Menu, X, Github, Linkedin, ArrowUpRight } from 'lucide-react';
+import { animate, stagger } from 'animejs';
 
-import headerCta from '../assets/header_cta.png';
+/** Thin scroll-progress bar at bottom of navbar */
+const ScrollProgressBar = () => {
+  const barRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      if (barRef.current) {
+        barRef.current.style.width = `${progress}%`;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#052659]/50">
+      <div
+        ref={barRef}
+        className="h-full bg-[#5483B3] transition-none"
+        style={{ width: '0%' }}
+      />
+    </div>
+  );
+};
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [theme, setTheme] = useState('dark');
+  const navRef = useRef(null);
+  const menuRef = useRef(null);
+  const toggleBtnRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Keyboard accessibility: close menu on Escape key
   useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && isOpen) {
+        setIsOpen(false);
+        if (toggleBtnRef.current) toggleBtnRef.current.focus();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen]);
+
+  // Subtle entrance slide-in without ever hiding the navbar if interrupted
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const nav = navRef.current;
+    if (!nav) return;
+
+    animate(nav, {
+      translateY: [-10, 0],
+      duration: 600,
+      ease: 'outExpo',
+    });
+  }, []);
+
+  // Animate mobile menu items when opened (without hardcoding opacity: 0 in JSX)
+  useEffect(() => {
+    if (!isOpen) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const links = document.querySelectorAll('.mobile-nav-link');
+    if (links.length > 0) {
+      animate(links, {
+        opacity: [0.3, 1],
+        translateX: [-10, 0],
+        delay: stagger(35),
+        duration: 300,
+        ease: 'outCubic',
+      });
     }
-  }, [theme]);
+  }, [isOpen]);
 
-  const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
-  };
-
-  const navLinks = [
-    { name: 'About', href: '#about' },
+  const desktopNavLinks = [
+    { name: 'Work', href: '#work' },
+    { name: 'Experience', href: '#experience' },
     { name: 'Skills', href: '#skills' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Services', href: '#services' },
+    { name: 'Labs', href: '#interactive-lab' },
+    { name: 'About', href: '#about' },
+    { name: 'Contact', href: '#contact' },
   ];
 
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
+  const mobileNavLinks = [
+    { name: 'Work', href: '#work' },
+    { name: 'Experience', href: '#experience' },
+    { name: 'Skills', href: '#skills' },
+    { name: 'Labs', href: '#interactive-lab' },
+    { name: 'About', href: '#about' },
+    { name: 'Contact', href: '#contact' },
+  ];
 
   return (
-    <header className="fixed top-0 w-full z-50 flex flex-col items-center transition-all duration-500">
-      <nav className={`
-        flex items-center justify-between transition-all duration-500 px-6 md:px-8 mt-6 md:mt-8
-        ${scrolled 
-          ? 'w-[90%] md:w-[80%] lg:w-[70%] py-3 rounded-full glass border border-white/10 shadow-2xl backdrop-blur-md' 
-          : 'w-full py-2 bg-transparent mt-0 md:mt-0'
-        }
-      `}>
-        <a href="#" className="flex items-center gap-2 group">
-          <img 
-            src={headerCta} 
-            alt="Giftedtech Logo" 
-            className="h-10 md:h-12 w-auto rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
-          />
-        </a>
+    <header
+      ref={navRef}
+      className="fixed top-0 left-0 right-0 z-50 transition-colors duration-200"
+      style={{ opacity: 1 }}
+    >
+      <div
+        className={`w-full transition-all duration-300 relative ${
+          scrolled || isOpen
+            ? 'bg-[#021024]/98 backdrop-blur-md border-b border-[#052659]'
+            : 'bg-[#021024]/90 backdrop-blur-sm border-b border-[#052659]/50'
+        }`}
+      >
+        <div className="max-w-6xl mx-auto px-5 sm:px-6 h-16 flex items-center justify-between">
+          {/* Brand - Always visible */}
+          <a
+            href="#"
+            onClick={() => setIsOpen(false)}
+            className="flex items-center gap-2 group py-1"
+            aria-label="Giftedtech Homepage"
+          >
+            <span className="font-mono text-base sm:text-lg tracking-tight text-[#C1E8FF] font-bold group-hover:text-white transition-colors">
+              Giftedtech<span className="text-[#5483B3] hidden sm:inline">.dev</span>
+            </span>
+            <span className="hidden sm:inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-mono font-normal bg-[#052659] text-[#7DA0CA] border border-[#5483B3]/20">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#7DA0CA] animate-pulse" />
+              Lagos
+            </span>
+          </a>
 
-        {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-10">
-          <div className="flex items-center gap-8">
-            {navLinks.map((link) => (
-              <a 
-                key={link.name} 
+          {/* Desktop Nav Items - Visible on md and larger */}
+          <nav className="hidden md:flex items-center gap-6 lg:gap-8" aria-label="Primary Navigation">
+            {desktopNavLinks.map((link) => (
+              <a
+                key={link.name}
                 href={link.href}
-                className="text-sm font-medium text-sub hover:text-primary transition-all duration-300 relative group"
+                className="text-xs uppercase tracking-widest font-mono text-[#7DA0CA] hover:text-[#C1E8FF] transition-colors py-1 relative group"
               >
                 {link.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full opacity-50" />
+                <span className="absolute bottom-0 left-0 w-0 h-px bg-[#5483B3] transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
+          </nav>
+
+          {/* Desktop External Links & CTA */}
+          <div className="hidden md:flex items-center gap-3">
+            <a
+              href="https://github.com/Giftedtech1"
+              target="_blank"
+              rel="noreferrer"
+              className="p-2 text-[#7DA0CA] hover:text-[#C1E8FF] transition-colors rounded hover:bg-[#052659]"
+              aria-label="GitHub Profile"
+            >
+              <Github size={18} />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/giftedtech-precious-a46421249"
+              target="_blank"
+              rel="noreferrer"
+              className="p-2 text-[#7DA0CA] hover:text-[#C1E8FF] transition-colors rounded hover:bg-[#052659]"
+              aria-label="LinkedIn Profile"
+            >
+              <Linkedin size={18} />
+            </a>
+            <a
+              href="#contact"
+              className="ml-2 px-3 py-1.5 rounded text-xs font-mono font-medium text-[#C1E8FF] bg-[#052659] border border-[#5483B3]/40 hover:border-[#7DA0CA] hover:bg-[#083375] transition-all min-h-[36px] inline-flex items-center"
+            >
+              Get in touch
+            </a>
           </div>
 
-          <div className="flex items-center gap-4">
-            <button 
-              onClick={toggleTheme} 
-              className="p-2.5 rounded-full hover:bg-primary/5 transition-all text-sub hover:text-primary tap-highlight-transparent"
-              aria-label="Toggle Theme"
-            >
-              <motion.div
-                initial={false}
-                animate={{ rotate: theme === 'dark' ? 0 : 180 }}
-                transition={{ duration: 0.5, type: "spring" }}
-              >
-                {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-              </motion.div>
-            </button>
-            
-            <motion.a 
-              href="#contact" 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-6 py-2 rounded-full bg-primary text-[#fdfaf5] text-sm font-semibold shadow-lg shadow-primary/20 transition-all bouncy"
-            >
-              Let's Talk
-            </motion.a>
-          </div>
-        </div>
-
-        {/* Mobile Toggle */}
-        <div className="flex md:hidden items-center gap-2">
-           <button 
-            onClick={toggleTheme} 
-            className="p-2 rounded-full text-sub hover:text-primary transition-colors"
-          >
-            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-          </button>
-          <button 
+          {/* Mobile Clean Hamburger Button - Min 44x44px touch target */}
+          <button
+            ref={toggleBtnRef}
             onClick={() => setIsOpen(!isOpen)}
-            className={`p-2 transition-all duration-300 rounded-full ${isOpen ? 'bg-primary text-white' : 'text-sub'}`}
+            className="md:hidden min-w-[44px] min-h-[44px] -mr-2 flex items-center justify-center text-[#7DA0CA] hover:text-[#C1E8FF] focus:outline-none focus:ring-1 focus:ring-[#5483B3] rounded transition-colors"
+            aria-expanded={isOpen}
+            aria-controls="mobile-menu"
+            aria-label={isOpen ? "Close Navigation Menu" : "Open Navigation Menu"}
           >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
+            {isOpen ? <X size={22} className="text-[#C1E8FF]" /> : <Menu size={22} />}
           </button>
         </div>
-      </nav>
 
-      {/* Scroll Progress Bar */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-primary origin-left z-[60]"
-        style={{ scaleX }}
-      />
+        {/* Scroll Progress Bar */}
+        <ScrollProgressBar />
+      </div>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isOpen && (
-           <motion.div 
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="fixed inset-x-4 top-24 bg-surface rounded-[2.5rem] shadow-2xl md:hidden overflow-hidden z-40 border border-border-subtle"
-          >
-            <div className="p-8 flex flex-col items-center gap-6">
-              {navLinks.map((link, index) => (
-                <motion.a 
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  key={link.name} 
-                  href={link.href}
-                  className="text-xl font-medium text-sub hover:text-primary transition-colors py-2"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {link.name}
-                </motion.a>
-              ))}
-              <motion.a 
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.4 }}
-                href="#contact" 
+      {/* Mobile Menu Dropdown - Fully rendered, always visible when isOpen */}
+      {isOpen && (
+        <div
+          id="mobile-menu"
+          ref={menuRef}
+          className="md:hidden bg-[#021024] border-b border-[#052659] px-5 py-6 shadow-2xl transition-all"
+        >
+          <nav className="flex flex-col space-y-1" aria-label="Mobile Navigation">
+            {mobileNavLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
                 onClick={() => setIsOpen(false)}
-                className="mt-4 w-full py-4 rounded-3xl bg-primary text-[#fdfaf5] font-bold text-center shadow-xl shadow-primary/20"
+                className="mobile-nav-link flex items-center justify-between min-h-[44px] px-3 py-2 rounded font-mono text-base text-[#C1E8FF] hover:bg-[#052659]/60 hover:text-white transition-colors"
               >
-                Say Hello
-              </motion.a>
+                <span>{link.name}</span>
+                <span className="text-xs text-[#5483B3]">→</span>
+              </a>
+            ))}
+          </nav>
+
+          {/* Social & Contact Strip in Mobile Menu */}
+          <div className="mt-6 pt-5 border-t border-[#052659] space-y-3">
+            <div className="grid grid-cols-2 gap-2">
+              <a
+                href="https://github.com/Giftedtech1"
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => setIsOpen(false)}
+                className="mobile-nav-link flex items-center justify-center gap-2 min-h-[44px] px-3 py-2 rounded font-mono text-xs text-[#7DA0CA] hover:text-[#C1E8FF] bg-[#052659]/40 border border-[#5483B3]/25 hover:border-[#7DA0CA]/50 transition-colors"
+              >
+                <Github size={16} />
+                <span>GitHub</span>
+                <ArrowUpRight size={12} className="text-[#5483B3]" />
+              </a>
+
+              <a
+                href="https://www.linkedin.com/in/giftedtech-precious-a46421249"
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => setIsOpen(false)}
+                className="mobile-nav-link flex items-center justify-center gap-2 min-h-[44px] px-3 py-2 rounded font-mono text-xs text-[#7DA0CA] hover:text-[#C1E8FF] bg-[#052659]/40 border border-[#5483B3]/25 hover:border-[#7DA0CA]/50 transition-colors"
+              >
+                <Linkedin size={16} />
+                <span>LinkedIn</span>
+                <ArrowUpRight size={12} className="text-[#5483B3]" />
+              </a>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+            <a
+              href="#contact"
+              onClick={() => setIsOpen(false)}
+              className="mobile-nav-link flex items-center justify-center gap-2 w-full min-h-[44px] px-4 py-2.5 rounded font-mono text-xs font-semibold text-[#021024] bg-[#C1E8FF] hover:bg-white transition-colors"
+            >
+              <span>Get in touch</span>
+              <span>→</span>
+            </a>
+          </div>
+        </div>
+      )}
     </header>
   );
 };

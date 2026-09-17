@@ -4,9 +4,8 @@ import { motion, useInView } from 'framer-motion';
 const SectionWrapper = ({ id, children, className = '' }) => {
   return (
     <section id={id} className={`py-24 relative overflow-hidden ${className}`}>
-      {/* Background ambient glow matching the accent color but faint */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 bg-[var(--accent-glow)] rounded-full blur-[120px] -z-10 pointer-events-none"></div>
-      
+
+
       <div className="container mx-auto px-6 md:px-12 relative z-10 w-full h-full">
         {children}
       </div>

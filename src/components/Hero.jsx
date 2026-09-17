@@ -1,153 +1,344 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, Phone, MessageSquare, ArrowRight, FileDown } from 'lucide-react';
-import { Button } from './Button';
-import { FadeIn } from './SectionWrapper';
-
-const TypewriterText = ({ texts }) => {
-  const [currentTextIndex, setCurrentTextIndex] = useState(0);
-  const [currentText, setCurrentText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [typingSpeed, setTypingSpeed] = useState(150);
-
-  useEffect(() => {
-    let timer;
-    const handleType = () => {
-      const fullText = texts[currentTextIndex];
-      
-      if (isDeleting) {
-        setCurrentText(fullText.substring(0, currentText.length - 1));
-        setTypingSpeed(50);
-      } else {
-        setCurrentText(fullText.substring(0, currentText.length + 1));
-        setTypingSpeed(150);
-      }
-
-      if (!isDeleting && currentText === fullText) {
-        setTimeout(() => setIsDeleting(true), 2500);
-      } else if (isDeleting && currentText === '') {
-        setIsDeleting(false);
-        setCurrentTextIndex((prev) => (prev + 1) % texts.length);
-        setTypingSpeed(500);
-      }
-    };
-
-    timer = setTimeout(handleType, typingSpeed);
-    return () => clearTimeout(timer);
-  }, [currentText, isDeleting, currentTextIndex, texts, typingSpeed]);
-
-  return (
-    <span className="text-accent min-h-[40px] inline-block font-medium italic">
-      {currentText}
-      <span className="animate-pulse ml-1 text-primary">|</span>
-    </span>
-  );
-};
+import React, { useEffect, useRef } from 'react';
+import { ArrowDownRight, ArrowRight, Github, Linkedin, MapPin, Terminal } from 'lucide-react';
+import { waapi, animate, stagger, splitText } from 'animejs';
+import { useMagneticHover } from '../hooks/useMagneticHover';
 
 const Hero = () => {
-  const roles = [
-    "Building for humans",
-    "Crafting digital stories",
-    "Solving puzzles with code",
-    "Focusing on the experience"
+  const sectionRef = useRef(null);
+  const headlineRef = useRef(null);
+  const subtitleRef = useRef(null);
+  const contentRef = useRef(null);
+  const primaryCTARef = useMagneticHover({ strength: 0.25 });
+  const secondaryCTARef = useMagneticHover({ strength: 0.2 });
+
+  const hasRun = useRef(false);
+
+  useEffect(() => {
+    // Guard against React StrictMode double-invocation in dev:
+    // StrictMode mounts → unmounts → remounts, which would call splitText twice
+    // on the same element after revert(), breaking the char array.
+    if (hasRun.current) return;
+    hasRun.current = true;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const headline = headlineRef.current;
+    const subtitle = subtitleRef.current;
+    const content = contentRef.current;
+    if (!headline || !subtitle || !content) return;
+
+    let headlineAnim = null;
+    let headlineSplitter = null;
+    let subAnim = null;
+    let contentAnim = null;
+    const timeouts = [];
+
+
+    // ── Phase 1: looping splitText char animation on the headline ────────────
+    try {
+      headlineSplitter = splitText(headline, { words: false, chars: true });
+      const chars = headlineSplitter.chars || [];
+
+      if (chars.length > 0) {
+        // Ensure proper display, spacing and high-contrast color for each character
+        const totalChars = chars.length;
+        chars.forEach((c, idx) => {
+          c.style.display = 'inline-block';
+          if (c.textContent === ' ' || c.innerHTML === '&nbsp;') {
+            c.style.width = '0.32em';
+          }
+          // Gradient color transition across characters: Ice blue -> Sky cyan -> Soft indigo
+          const ratio = idx / Math.max(totalChars - 1, 1);
+          if (ratio < 0.4) {
+            c.style.color = '#C1E8FF';
+          } else if (ratio < 0.75) {
+            c.style.color = '#7DD3FC';
+          } else {
+            c.style.color = '#A5B4FC';
+          }
+        });
+
+        headlineAnim = animate(chars, {
+          // Property keyframes — bounce up and return
+          y: [
+            { to: '-2.75rem', ease: 'outExpo',   duration: 600 },
+            { to: 0,          ease: 'outBounce', duration: 800, delay: 100 },
+          ],
+          // Property-specific: full spin from -1 turn
+          rotate: {
+            from: '-1turn',
+            delay: 0,
+          },
+          delay: stagger(50),
+          ease: 'inOutCirc',
+          loopDelay: 1000,
+          loop: true,
+        });
+      }
+    } catch (e) {
+      console.error('Headline anime.js error:', e);
+    }
+
+    // ── Phase 2: subtitle smooth entrance ────────────────────────────────────
+    subAnim = animate(subtitle, {
+      opacity:    [0, 1],
+      translateY: [16, 0],
+      duration:   600,
+      delay:      250,
+      ease:       'outExpo',
+    });
+
+    // ── Phase 3: badges + CTAs + tech-strip entrance ────────────────────────
+    const contentItems = content.querySelectorAll('.hero-content-item');
+    contentAnim = animate(contentItems, {
+      opacity:    [0, 1],
+      translateY: [18, 0],
+      delay:      stagger(70, { start: 350 }),
+      duration:   650,
+      ease:       'outExpo',
+    });
+
+    return () => {
+      hasRun.current = false;
+      try {
+        headlineAnim?.pause?.();
+        subAnim?.pause?.();
+        contentAnim?.pause?.();
+        headlineSplitter?.revert?.();
+        if (subtitle) {
+          subtitle.style.opacity = '1';
+          subtitle.style.transform = 'none';
+        }
+        contentItems.forEach((el) => {
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        });
+      } catch {
+        // cleanup safe
+      }
+    };
+  }, []);
+
+  // Tech stack items with individual accent colors
+  const techStack = [
+    { label: 'React',       color: '#61DAFB', bg: 'rgba(97,218,251,0.08)',  border: 'rgba(97,218,251,0.25)'  },
+    { label: 'TypeScript',  color: '#3B82F6', bg: 'rgba(59,130,246,0.08)',  border: 'rgba(59,130,246,0.25)'  },
+    { label: 'Next.js',     color: '#ffffff', bg: 'rgba(255,255,255,0.05)', border: 'rgba(255,255,255,0.15)' },
+    { label: 'Tailwind',    color: '#38BDF8', bg: 'rgba(56,189,248,0.08)',  border: 'rgba(56,189,248,0.25)'  },
+    { label: 'Supabase',    color: '#3ECF8E', bg: 'rgba(62,207,142,0.08)',  border: 'rgba(62,207,142,0.25)'  },
+    { label: 'Docker',      color: '#2496ED', bg: 'rgba(36,150,237,0.08)',  border: 'rgba(36,150,237,0.25)'  },
+    { label: 'Kubernetes',  color: '#326CE5', bg: 'rgba(50,108,229,0.08)',  border: 'rgba(50,108,229,0.25)'  },
+    { label: 'AWS',         color: '#FF9900', bg: 'rgba(255,153,0,0.08)',   border: 'rgba(255,153,0,0.25)'   },
+    { label: 'Azure',       color: '#0078D4', bg: 'rgba(0,120,212,0.08)',   border: 'rgba(0,120,212,0.25)'   },
   ];
 
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center pt-32 pb-20 overflow-hidden" id="hero">
-      {/* Organic Background Blobs - Slower & Softer */}
-      <div className="absolute top-[-10%] left-[-5%] w-[500px] h-[500px] bg-primary/5 dark:bg-primary/10 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[100px] animate-blob"></div>
-      <div className="absolute top-[20%] right-[-10%] w-[450px] h-[450px] bg-accent/5 dark:bg-accent/10 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[100px] animate-blob animation-delay-5000"></div>
-      <div className="absolute bottom-[-10%] left-[20%] w-[400px] h-[400px] bg-[#f2cc8f]/10 dark:bg-[#f2cc8f]/5 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[100px] animate-blob animation-delay-10000"></div>
+    <section
+      ref={sectionRef}
+      className="relative pt-28 pb-16 sm:pt-36 sm:pb-24 md:pt-40 md:pb-32 bg-[#021024] bg-grid overflow-hidden border-b border-[#052659]"
+    >
+      {/* Depth vignette */}
+      <div className="absolute inset-0 bg-radial from-transparent via-[#021024]/60 to-[#021024] pointer-events-none" />
 
-      <div className="container mx-auto px-6 relative z-10 text-center flex flex-col items-center">
-        <FadeIn delay={0.2} direction="down">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent border border-accent/20 mb-8 backdrop-blur-sm">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
-            </span>
-            <span className="text-sm font-medium tracking-wide">Available for new stories</span>
-          </div>
-        </FadeIn>
+      {/* Scan line */}
+      <div className="scan-line" />
 
-        <FadeIn delay={0.4} direction="up" className="mb-6">
-          <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black text-main mb-6 tracking-tight leading-[1.05] selection:bg-primary/20">
-            Hi, I'm <span className="text-gradient">Precious</span>. <br />
-            Let's build with <span className="relative">
-              heart.
-              <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 100 10" preserveAspectRatio="none">
-                <path d="M0 5 Q 25 0, 50 5 T 100 5" fill="none" stroke="currentColor" strokeWidth="2" className="text-primary/30" />
-              </svg>
-            </span>
-          </h1>
-        </FadeIn>
+      <div className="max-w-6xl mx-auto px-5 sm:px-6 relative z-10">
 
-        <FadeIn delay={0.6} direction="up" className="mb-8">
-          <div className="text-xl md:text-2xl font-light text-sub max-w-2xl">
-            I'm a developer who believes technology should feel <br className="hidden md:block" />
-            <TypewriterText texts={roles} />
-          </div>
-        </FadeIn>
+        {/* ── Badges ─────────────────────────────────────── */}
+        <div ref={contentRef}>
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-6 sm:mb-8 text-xs font-mono hero-content-item">
 
-        <FadeIn delay={0.8} direction="up">
-          <p className="text-lg md:text-xl text-sub/80 max-w-xl mx-auto mb-12 leading-relaxed font-light">
-            I design and build web applications with heart, focus, and a lot of care. Based in Lagos, building for the world.
-          </p>
-        </FadeIn>
-
-        <FadeIn delay={1.0} direction="up" className="w-full">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16">
-            <Button variant="primary" size="lg" className="w-full sm:w-auto shadow-2xl" onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>
-              Let's Talk <MessageSquare className="ml-2 w-5 h-5" />
-            </Button>
-            <Button variant="secondary" size="lg" className="w-full sm:w-auto border-none" onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
-              See My Work <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-            <a 
-              href="/resume.pdf" 
-              download 
-              className="w-full sm:w-auto"
+            {/* Name badge */}
+            <div
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded text-[#C1E8FF]"
+              style={{
+                background: 'rgba(5,38,89,0.7)',
+                border: '1px solid rgba(84,131,179,0.3)',
+              }}
             >
-              <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                Download CV <FileDown className="ml-2 w-5 h-5" />
-              </Button>
+              <span
+                className="w-2 h-2 rounded-full"
+                style={{ background: '#38BDF8' }}
+              />
+              <span>Ogunleye Precious · Giftedtech</span>
+            </div>
+
+            {/* Location badge */}
+            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-[#021024] border border-[#052659] text-[#7DA0CA]">
+              <MapPin size={12} style={{ color: '#38BDF8' }} />
+              <span>Lagos, Nigeria</span>
+            </div>
+
+            {/* Available badge */}
+            <div
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-[#C1E8FF]"
+              style={{
+                background: 'rgba(62,207,142,0.08)',
+                border: '1px solid rgba(62,207,142,0.25)',
+              }}
+            >
+              <span className="w-2 h-2 rounded-full bg-[#3ECF8E]" />
+              <span style={{ color: '#3ECF8E' }}>Available for work</span>
+            </div>
+          </div>
+
+          {/* ── Headline — animated via splitText ──────────── */}
+          <div className="max-w-4xl mb-5 sm:mb-6 pt-4 sm:pt-6">
+            <h1
+              ref={headlineRef}
+              id="hero-headline"
+              className="text-[clamp(2.4rem,9vw,5rem)] font-bold tracking-tight leading-[1.15] sm:leading-[1.1]"
+              aria-label="Building useful products for the web."
+              style={{
+                color: '#C1E8FF',
+                letterSpacing: '-0.02em',
+              }}
+            >
+              Building useful products for the web.
+            </h1>
+
+            {/* ── Subtitle — animated via splitText words ──── */}
+            <p
+              ref={subtitleRef}
+              className="mt-5 text-base sm:text-lg md:text-xl leading-relaxed max-w-2xl font-normal"
+              style={{ color: '#94A3B8' }}
+            >
+              Frontend / Full-Stack Developer building modern web applications,
+              digital products, and user-focused experiences with{' '}
+              <span style={{ color: '#61DAFB', fontWeight: 500 }}>React</span>,{' '}
+              <span style={{ color: '#3B82F6', fontWeight: 500 }}>TypeScript</span>, and robust architectures.
+            </p>
+          </div>
+
+          {/* ── CTA Buttons ─────────────────────────────────── */}
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 pt-1 hero-content-item">
+            {/* Primary — gradient */}
+            <a
+              ref={primaryCTARef}
+              href="#work"
+              id="hero-view-work-btn"
+              className="inline-flex items-center justify-center gap-2.5 min-h-[48px] px-6 py-3 rounded-md text-sm font-mono font-semibold transition-all shadow-lg w-full sm:w-auto"
+              style={{
+                background: 'linear-gradient(135deg, #38BDF8 0%, #818CF8 100%)',
+                color: '#021024',
+                boxShadow: '0 4px 20px rgba(56,189,248,0.25), 0 2px 8px rgba(129,140,248,0.20)',
+                willChange: 'transform',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 6px 28px rgba(56,189,248,0.38), 0 3px 12px rgba(129,140,248,0.30)'; }}
+              onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 4px 20px rgba(56,189,248,0.25), 0 2px 8px rgba(129,140,248,0.20)'; }}
+            >
+              <span>View my work</span>
+              <ArrowDownRight size={16} />
             </a>
-          </div>
-        </FadeIn>
 
-        <FadeIn delay={1.2} direction="up">
-          <div className="flex items-center justify-center gap-8">
-            <SocialLink href="https://github.com/Giftedtech1" icon={<Github size={24} />} label="GitHub" />
-            <SocialLink href="https://www.linkedin.com/in/giftedtech-precious-a46421249" icon={<Linkedin size={24} />} label="LinkedIn" />
-            <SocialLink href="mailto:Giftedisprecious@gmail.com" icon={<Mail size={24} />} label="Email" />
-            <SocialLink href="https://wa.me/2349059464257" icon={<Phone size={24} />} label="WhatsApp" />
+            {/* Secondary — ghost */}
+            <a
+              ref={secondaryCTARef}
+              href="#contact"
+              id="hero-contact-btn"
+              className="inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-md text-sm font-mono font-medium transition-all w-full sm:w-auto"
+              style={{
+                color: '#C1E8FF',
+                background: 'rgba(5,38,89,0.5)',
+                border: '1px solid rgba(99,102,241,0.40)',
+                willChange: 'transform',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.borderColor = 'rgba(129,140,248,0.65)';
+                e.currentTarget.style.background = 'rgba(99,102,241,0.12)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.borderColor = 'rgba(99,102,241,0.40)';
+                e.currentTarget.style.background = 'rgba(5,38,89,0.5)';
+              }}
+            >
+              <span>Get in touch</span>
+              <ArrowRight size={15} />
+            </a>
+
+            {/* Social Links */}
+            <div className="flex items-center gap-2 pt-2 sm:pt-0 sm:ml-2">
+              <a
+                href="https://github.com/Giftedtech1"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center gap-2 min-h-[44px] flex-1 sm:flex-initial px-3.5 py-2 rounded-md text-xs font-mono transition-all"
+                style={{
+                  color: '#94A3B8',
+                  background: 'rgba(5,38,89,0.30)',
+                  border: '1px solid rgba(84,131,179,0.22)',
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.color = '#C1E8FF';
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)';
+                  e.currentTarget.style.background = 'rgba(30,30,40,0.55)';
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.color = '#94A3B8';
+                  e.currentTarget.style.borderColor = 'rgba(84,131,179,0.22)';
+                  e.currentTarget.style.background = 'rgba(5,38,89,0.30)';
+                }}
+                aria-label="GitHub Profile"
+              >
+                <Github size={15} />
+                <span>GitHub</span>
+              </a>
+
+              <a
+                href="https://www.linkedin.com/in/giftedtech-precious-a46421249"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center gap-2 min-h-[44px] flex-1 sm:flex-initial px-3.5 py-2 rounded-md text-xs font-mono transition-all"
+                style={{
+                  color: '#94A3B8',
+                  background: 'rgba(5,38,89,0.30)',
+                  border: '1px solid rgba(84,131,179,0.22)',
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.color = '#0A66C2';
+                  e.currentTarget.style.borderColor = 'rgba(10,102,194,0.45)';
+                  e.currentTarget.style.background = 'rgba(10,102,194,0.08)';
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.color = '#94A3B8';
+                  e.currentTarget.style.borderColor = 'rgba(84,131,179,0.22)';
+                  e.currentTarget.style.background = 'rgba(5,38,89,0.30)';
+                }}
+                aria-label="LinkedIn Profile"
+              >
+                <Linkedin size={15} />
+                <span>LinkedIn</span>
+              </a>
+            </div>
           </div>
-        </FadeIn>
+
+          {/* ── Tech Strip ──────────────────────────────────── */}
+          <div className="mt-12 sm:mt-16 pt-6 sm:pt-8 border-t hero-content-item" style={{ borderColor: 'rgba(84,131,179,0.18)' }}>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="flex items-center gap-1.5 text-xs font-mono font-medium mr-1" style={{ color: '#7DA0CA' }}>
+                  <Terminal size={13} style={{ color: '#38BDF8' }} />
+                  Core Stack:
+                </span>
+                {techStack.map(({ label, color, bg, border }) => (
+                  <span
+                    key={label}
+                    className="inline-flex items-center px-2.5 py-1 rounded text-[11px] font-mono font-medium"
+                    style={{ color, background: bg, border: `1px solid ${border}` }}
+                  >
+                    {label}
+                  </span>
+                ))}
+              </div>
+
+            </div>
+          </div>
+        </div>
+
       </div>
-
-      {/* Scroll indicator */}
-      <motion.div 
-        animate={{ y: [0, 8, 0] }}
-        transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50"
-      >
-        <span className="text-[10px] uppercase tracking-[0.2em] font-semibold text-muted">Scroll down</span>
-        <div className="w-[1px] h-12 bg-gradient-to-b from-primary to-transparent" />
-      </motion.div>
     </section>
   );
 };
-
-const SocialLink = ({ href, icon, label }) => (
-  <a 
-    href={href} 
-    target="_blank" 
-    rel="noreferrer" 
-    className="text-muted hover:text-primary transition-all duration-300 hover:-translate-y-1"
-  >
-    {icon}
-    <span className="sr-only">{label}</span>
-  </a>
-);
 
 export default Hero;
