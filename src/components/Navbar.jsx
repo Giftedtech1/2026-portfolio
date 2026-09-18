@@ -111,11 +111,10 @@ const Navbar = () => {
       style={{ opacity: 1 }}
     >
       <div
-        className={`w-full transition-all duration-300 relative ${
-          scrolled || isOpen
+        className={`w-full transition-all duration-300 relative ${scrolled || isOpen
             ? 'bg-[#021024]/98 backdrop-blur-md border-b border-[#052659]'
             : 'bg-[#021024]/90 backdrop-blur-sm border-b border-[#052659]/50'
-        }`}
+          }`}
       >
         <div className="max-w-6xl mx-auto px-5 sm:px-6 h-16 flex items-center justify-between">
           {/* Brand - Always visible */}
@@ -128,10 +127,7 @@ const Navbar = () => {
             <span className="font-mono text-base sm:text-lg tracking-tight text-[#C1E8FF] font-bold group-hover:text-white transition-colors">
               Giftedtech<span className="text-[#5483B3] hidden sm:inline">.dev</span>
             </span>
-            <span className="hidden sm:inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-mono font-normal bg-[#052659] text-[#7DA0CA] border border-[#5483B3]/20">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#7DA0CA] animate-pulse" />
-              Lagos
-            </span>
+
           </a>
 
           {/* Desktop Nav Items - Visible on md and larger */}

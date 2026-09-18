@@ -18,6 +18,7 @@
   --color-text-muted: #5483B3;
 
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Outfit", "Plus Jakarta Sans", "Inter", sans-serif;
   --font-mono: "JetBrains Mono", "SF Mono", "Fira Code", monospace;
 }
 
@@ -228,3 +229,10 @@ html.lenis, html.lenis body {
     scroll-behavior: auto !important;
   }
 }
+
+/* 8-Second Switcher Countdown */
+@keyframes progressFill {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+

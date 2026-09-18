@@ -1,9 +1,13 @@
-import React, { useRef, useEffect } from 'react';
-import { FileDown, Terminal, MapPin } from 'lucide-react';
+import React, { useRef, useEffect, useState } from 'react';
+import { FileDown, Terminal, MapPin, Play, ShieldCheck, Sparkles } from 'lucide-react';
 import { animate, stagger } from 'animejs';
 import { useAnimeCardTilt } from '../hooks/useAnimeCardTilt';
 import { useMagneticHover } from '../hooks/useMagneticHover';
 import ScrollReveal from './ScrollReveal';
+import VideoModal from './VideoModal';
+
+import meImg from '../assets/me.jpeg';
+import devVideo from '../assets/geometric-instagram-152-portrait-1080x1350.mp4';
 
 const principles = [
   {
@@ -24,6 +28,7 @@ const About = () => {
   const panelRef = useAnimeCardTilt({ maxTilt: 4, scale: 1.01, perspective: 1400 });
   const cvRef = useMagneticHover({ strength: 0.2 });
   const principlesRef = useRef(null);
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
   useEffect(() => {
     const list = principlesRef.current;
@@ -68,7 +73,7 @@ const About = () => {
               </h2>
             </div>
             <p className="text-xs sm:text-sm font-mono text-[#7DA0CA] mt-3 md:mt-0 max-w-md reveal-item">
-              Product engineer focused on modern web standards, resilient architectures, and real-world utility.
+              web developer focused on modern web standards, resilient architectures, and real-world utility.
             </p>
           </div>
         </ScrollReveal>
@@ -76,37 +81,67 @@ const About = () => {
         {/* Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
 
-          {/* Main Narrative */}
+          {/* Main Narrative Column */}
           <ScrollReveal direction="up" distance={32} delayStep={100} duration={800} ease="outExpo" threshold={0.15} className="lg:col-span-7">
-            <div className="space-y-5 sm:space-y-6 text-sm sm:text-base md:text-lg text-[#7DA0CA] font-normal leading-relaxed reveal-item">
-              <p>
-                I am <span className="text-[#C1E8FF] font-semibold">Ogunleye Precious</span> (known across the engineering community as <span className="text-[#C1E8FF] font-mono font-medium">Giftedtech</span>). I am a frontend and full-stack developer based in Lagos, Nigeria, dedicated to building software that works reliably in production.
-              </p>
+            <div>
+              {/* Developer Profile Header Badge */}
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 p-4 sm:p-5 rounded-2xl bg-[#052659]/40 border border-[#5483B3]/30 mb-8 reveal-item">
+                <div className="relative w-20 h-20 sm:w-24 sm:h-24 shrink-0 rounded-xl overflow-hidden border-2 border-[#38BDF8]/40 shadow-lg">
+                  <img
+                    src={meImg}
+                    alt="Ogunleye Precious"
+                    className="w-full h-full object-cover object-center"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#021024]/60 to-transparent pointer-events-none" />
+                </div>
 
-              <p className="reveal-item">
-                My background centers on modern frontend engineering with React, JavaScript, and TypeScript, extending seamlessly into backend integrations with Supabase, Firebase, cloud infrastructure (AWS, Azure, Docker, Kubernetes), and REST APIs.
-              </p>
+                <div className="space-y-1.5 flex-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] font-mono text-[#38BDF8] font-semibold tracking-wider">
+                      VERIFIED DEVELOPER
+                    </span>
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-bold text-[#C1E8FF]">
+                    Ogunleye Precious <span className="text-sm font-mono text-[#7DA0CA] font-normal">(@Giftedtech)</span>
+                  </h3>
+                  <p className="text-xs sm:text-sm font-mono text-[#7DA0CA]">
+                    Software Developer ·
+                  </p>
+                </div>
+              </div>
 
-              <p className="reveal-item">
-                Rather than viewing code in a vacuum, I approach software with product thinking: What does the user need? How does the interface respond on a mobile device under varying network conditions? What architectural decisions make this platform simple to scale tomorrow?
-              </p>
+              {/* Narrative Content */}
+              <div className="space-y-5 sm:space-y-6 text-sm sm:text-base md:text-lg text-[#7DA0CA] font-normal leading-relaxed reveal-item">
+                <p>
+                  I am <span className="text-[#C1E8FF] font-semibold">Ogunleye Precious</span> (known across the tech community as <span className="text-[#C1E8FF] font-mono font-medium">Giftedtech</span>). I am a frontend and full-stack developer working remotely with teams worldwide, dedicated to building software that works reliably in production.
+                </p>
 
-              <p className="reveal-item">
-                From architecting multi-party marketplaces like Hand2Hand to building educational platforms and luxury e-commerce storefronts like Kambili Scents, I thrive on taking products from concept to deployment with meticulous attention to detail.
-              </p>
+                <p className="reveal-item">
+                  My background centers on modern frontend engineering with React, JavaScript, and TypeScript, extending seamlessly into backend integrations with Supabase, Firebase, cloud infrastructure (AWS, Azure, Docker, Kubernetes), and REST APIs.
+                </p>
 
-              {/* Resume CTA */}
-              <div className="pt-4 sm:pt-6 reveal-item">
-                <a
-                  ref={cvRef}
-                  href="/resume.pdf"
-                  download
-                  className="inline-flex items-center justify-center gap-2.5 min-h-[44px] px-5 py-2.5 rounded text-xs font-mono font-medium text-[#C1E8FF] bg-[#052659] border border-[#5483B3]/40 hover:border-[#7DA0CA] hover:bg-[#083375] transition-colors w-full sm:w-auto"
-                  style={{ willChange: 'transform' }}
-                >
-                  <FileDown size={16} />
-                  <span>Download Curriculum Vitae (PDF)</span>
-                </a>
+                <p className="reveal-item">
+                  Rather than viewing code in a vacuum, I approach software with product thinking: What does the user need? How does the interface respond on a mobile device under varying network conditions? What architectural decisions make this platform simple to scale tomorrow?
+                </p>
+
+                <p className="reveal-item">
+                  From architecting multi-party marketplaces like Hand2Hand to building educational platforms and luxury e-commerce storefronts like Kambili Scents, I thrive on taking products from concept to deployment with meticulous attention to detail.
+                </p>
+
+                {/* CTAs: Resume */}
+                <div className="pt-4 sm:pt-6 flex flex-wrap items-center gap-3.5 reveal-item">
+                  <a
+                    ref={cvRef}
+                    href="/resume.pdf"
+                    download
+                    className="inline-flex items-center justify-center gap-2.5 min-h-[44px] px-5 py-2.5 rounded text-xs font-mono font-medium text-[#C1E8FF] bg-[#052659] border border-[#5483B3]/40 hover:border-[#7DA0CA] hover:bg-[#083375] transition-colors w-full sm:w-auto"
+                    style={{ willChange: 'transform' }}
+                  >
+                    <FileDown size={16} />
+                    <span>Download Curriculum Vitae (PDF)</span>
+                  </a>
+                </div>
               </div>
             </div>
           </ScrollReveal>
@@ -136,19 +171,19 @@ const About = () => {
                   </div>
                 ))}
               </div>
-
-              <div className="pt-4 border-t border-[#052659] flex items-center justify-between text-[11px] font-mono text-[#7DA0CA]">
-                <span className="flex items-center gap-1.5">
-                  <MapPin size={12} className="text-[#5483B3]" />
-                  Lagos, Nigeria
-                </span>
-              </div>
             </div>
           </div>
 
         </div>
 
       </div>
+
+      {/* Cinematic Modal for Video Reel */}
+      <VideoModal
+        isOpen={isVideoModalOpen}
+        onClose={() => setIsVideoModalOpen(false)}
+        videoSrc={devVideo}
+      />
     </section>
   );
 };

@@ -202,28 +202,11 @@ const MODE_CLASSES = {
 const CoreStackLayout = () => {
   const containerRef = useRef(null);
   const layoutRef = useRef(null);
-  const autoRef = useRef(null);
-  const modeIndexRef = useRef(0);
   const [activeMode, setActiveMode] = useState('grid2');
-  const [hasEntered, setHasEntered] = useState(false);
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    layoutRef.current = createLayout(el, {
-      duration: 700,
-      ease: 'outExpo',
-      delay: stagger(60),
-    });
-    return () => {
-      layoutRef.current?.revert?.();
-    };
-  }, []);
+  const [timerKey, setTimerKey] = useState(0);
 
   const switchMode = (mode) => {
-    // Always update React state so CSS grid/flex transitions fire
     setActiveMode(mode);
-    // Optionally layer anime.js FLIP on top if createLayout is ready
     const el = containerRef.current;
     const layout = layoutRef.current;
     if (el && layout) {
@@ -237,7 +220,7 @@ const CoreStackLayout = () => {
           delay: stagger(60),
         });
       } catch (_) {
-        // FLIP failed silently — CSS transition is already applied via state
+        // Safe fallback
       }
     }
   };
@@ -245,39 +228,58 @@ const CoreStackLayout = () => {
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !hasEntered) {
-          setHasEntered(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.25 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [hasEntered]);
+    try {
+      layoutRef.current = createLayout(el, {
+        duration: 700,
+        ease: 'outExpo',
+        delay: stagger(60),
+      });
+    } catch (_) {
+      // Safe fallback
+    }
+    return () => {
+      layoutRef.current?.revert?.();
+    };
+  }, []);
 
+  // Auto-switch between 2-Col, 3-Col, and List every 8 seconds
   useEffect(() => {
-    if (!hasEntered) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    autoRef.current = setInterval(() => {
-      modeIndexRef.current = (modeIndexRef.current + 1) % MODES.length;
-      switchMode(MODES[modeIndexRef.current]);
+
+    const interval = setInterval(() => {
+      setActiveMode((prev) => {
+        const currentIndex = MODES.indexOf(prev);
+        const nextIndex = (currentIndex + 1) % MODES.length;
+        const nextMode = MODES[nextIndex];
+
+        // Trigger FLIP layout transition
+        const el = containerRef.current;
+        const layout = layoutRef.current;
+        if (el && layout) {
+          try {
+            layout.update(({ root }) => {
+              Object.values(MODE_CLASSES).forEach((cls) => root.classList.remove(cls));
+              root.classList.add(MODE_CLASSES[nextMode]);
+            }, {
+              duration: 700,
+              ease: 'outExpo',
+              delay: stagger(60),
+            });
+          } catch (_) {
+            // Safe fallback
+          }
+        }
+        return nextMode;
+      });
+      setTimerKey((k) => k + 1);
     }, 8000);
-    return () => clearInterval(autoRef.current);
-  }, [hasEntered]);
+
+    return () => clearInterval(interval);
+  }, [timerKey]);
 
   const handleModeClick = (mode) => {
-    clearInterval(autoRef.current);
-    modeIndexRef.current = MODES.indexOf(mode);
     switchMode(mode);
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      autoRef.current = setInterval(() => {
-        modeIndexRef.current = (modeIndexRef.current + 1) % MODES.length;
-        switchMode(MODES[modeIndexRef.current]);
-      }, 8000);
-    }
+    setTimerKey((k) => k + 1);
   };
 
   return (
@@ -286,7 +288,7 @@ const CoreStackLayout = () => {
         <div>
           <div className="flex items-center gap-2 text-xs font-mono text-[#5483B3] uppercase tracking-wider mb-1">
             <Layers size={14} className="text-[#7DA0CA]" />
-            <span>Anime.js Auto Layout</span>
+
           </div>
           <h3 className="text-base sm:text-lg font-bold text-[#C1E8FF] tracking-tight">
             Core Stack
@@ -298,22 +300,26 @@ const CoreStackLayout = () => {
               key={mode}
               id={`core-stack-mode-${mode}`}
               onClick={() => handleModeClick(mode)}
-              className={`px-2.5 py-1 rounded border transition-colors flex items-center gap-1 ${
-                activeMode === mode
-                  ? 'bg-[#052659] text-[#C1E8FF] border-[#5483B3]'
-                  : 'text-[#7DA0CA] border-[#052659] hover:border-[#5483B3]/40 hover:text-[#C1E8FF]'
-              }`}
+              className={`relative overflow-hidden px-2.5 py-1.5 rounded border transition-all flex items-center gap-1.5 ${activeMode === mode
+                ? 'bg-[#052659] text-[#C1E8FF] border-[#38BDF8]/60 shadow-sm'
+                : 'text-[#7DA0CA] border-[#052659] hover:border-[#5483B3]/40 hover:text-[#C1E8FF]'
+                }`}
             >
               {MODE_LABELS[mode].icon}
               <span>{MODE_LABELS[mode].label}</span>
+              {activeMode === mode && (
+                <span className="absolute bottom-0 inset-x-0 h-[2px] bg-[#38BDF8]/30 overflow-hidden">
+                  <span
+                    key={`${activeMode}-${timerKey}`}
+                    className="block h-full bg-gradient-to-r from-[#38BDF8] to-[#818CF8]"
+                    style={{ animation: 'progressFill 8s linear infinite' }}
+                  />
+                </span>
+              )}
             </button>
           ))}
         </div>
       </div>
-
-      <p className="text-xs text-[#7DA0CA] mb-5 leading-relaxed font-mono">
-        Animating between layout states with <span className="text-[#C1E8FF]">createLayout()</span> — DOM order, flex direction & grid columns transition seamlessly.
-      </p>
 
       <div
         ref={containerRef}
@@ -341,11 +347,6 @@ const CoreStackLayout = () => {
             </div>
           </div>
         ))}
-      </div>
-
-      <div className="mt-4 pt-3 border-t border-[#052659] flex items-center justify-between text-[11px] font-mono text-[#5483B3]">
-        <span>layout.update(cb) → FLIP transition</span>
-        <span className="text-[#7DA0CA]">Auto-cycling (8s)</span>
       </div>
 
       <style>{`
