@@ -319,8 +319,8 @@ const Hero = () => {
                 className="mt-5 text-base sm:text-lg md:text-xl leading-relaxed font-normal"
                 style={{ color: '#94A3B8' }}
               >
-                Frontend / Full-Stack Developer building modern web applications,
-                digital products, and user-focused experiences with{' '}
+                Frontend / Full-Stack Developer based in Lagos, Nigeria, building modern
+                web applications, digital products, and user-focused experiences with{' '}
                 <span style={{ color: '#61DAFB', fontWeight: 500 }}>React</span>,{' '}
                 <span style={{ color: '#3B82F6', fontWeight: 500 }}>TypeScript</span>, and robust architectures.
               </p>
