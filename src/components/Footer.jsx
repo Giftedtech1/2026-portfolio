@@ -7,16 +7,16 @@ const Footer = () => {
   const backToTopRef = useMagneticHover({ strength: 0.25 });
 
   return (
-    <footer className="bg-[#021024] border-t border-[#052659] py-10 sm:py-12 text-xs font-mono">
+    <footer className="bg-[#021024] border-t border-[#052659] py-10 sm:py-12 text-sm">
       <div className="max-w-6xl mx-auto px-5 sm:px-6">
-        
+
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 sm:gap-8 pb-6 sm:pb-8 border-b border-[#052659]">
           <div>
             <div className="text-sm font-bold text-[#C1E8FF] mb-1">
-              Ogunleye Precious · Giftedtech
+              Ogunleye Precious, Giftedtech
             </div>
-            <div className="text-[#7DA0CA] text-xs">
-              Frontend & Product Engineer · Lagos, Nigeria
+            <div className="text-[#7DA0CA] text-sm">
+              Frontend & Product Engineer, Lagos, Nigeria
             </div>
           </div>
 
@@ -33,13 +33,12 @@ const Footer = () => {
         </div>
 
         <div className="pt-6 sm:pt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-[#5483B3]">
-          <div className="text-[11px] sm:text-xs">
+          <div className="text-sm">
             © {currentYear} Ogunleye Precious. All rights reserved.
           </div>
 
-          <div className="flex items-center gap-4 text-[11px] sm:text-xs">
+          <div className="flex items-center gap-4 text-sm">
             <span>UTC+1 (WAT)</span>
-            <span>·</span>
             <a
               ref={backToTopRef}
               href="#"

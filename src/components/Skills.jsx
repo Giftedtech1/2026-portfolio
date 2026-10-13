@@ -94,7 +94,7 @@ const SkillCard = ({ category }) => {
   return (
     <div
       ref={cardRef}
-      className="rounded-lg bg-[#052659]/30 border border-[#5483B3]/25 p-5 sm:p-6 md:p-8 flex flex-col justify-between hover:border-[#7DA0CA]/45 transition-colors"
+      className="rounded-sm bg-[#052659]/30 border border-[#5483B3]/25 p-5 sm:p-6 md:p-8 flex flex-col justify-between hover:border-[#7DA0CA]/45 transition-colors"
       style={{ willChange: 'transform' }}
     >
       <div>
@@ -107,17 +107,17 @@ const SkillCard = ({ category }) => {
           </h3>
         </div>
 
-        <p className="text-xs text-[#7DA0CA] mb-5 sm:mb-6 leading-relaxed">
+        <p className="text-sm text-[#7DA0CA] mb-5 sm:mb-6 leading-relaxed">
           {category.description}
         </p>
 
         <div ref={skillListRef} className="space-y-3.5 pt-4 border-t border-[#052659]">
           {category.skills.map((skill) => (
             <div key={skill.name} className="group skill-row">
-              <div className="text-xs sm:text-sm font-mono font-medium text-[#C1E8FF]">
-                <span>{skill.name}</span>
+              <div className="text-sm font-medium text-[#C1E8FF]">
+                {skill.name}
               </div>
-              <p className="text-[11px] sm:text-xs text-[#7DA0CA]/80 mt-0.5 font-sans leading-snug">
+              <p className="text-sm text-[#7DA0CA]/80 mt-0.5 leading-snug">
                 {skill.detail}
               </p>
             </div>
@@ -142,7 +142,7 @@ const Skills = () => {
                 Skills & Proficiencies
               </h2>
             </div>
-            <p className="text-xs sm:text-sm font-mono text-[#7DA0CA] mt-3 md:mt-0 max-w-md reveal-item">
+            <p className="text-sm text-[#7DA0CA] mt-3 md:mt-0 max-w-md reveal-item">
               Grounded in core web technologies, modern frameworks, and production-tested toolchains.
             </p>
           </div>

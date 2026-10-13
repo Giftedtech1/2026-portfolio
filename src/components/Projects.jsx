@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { ExternalLink, Github, ArrowUpRight, CheckCircle2, ShieldCheck, Zap, Activity, Globe, Compass } from 'lucide-react';
+import { Github, Zap } from 'lucide-react';
 import { animate, stagger } from 'animejs';
 import hand2handImg from '../assets/hand2hand.jpg';
 import littleBeginningsImg from '../assets/little_beginnings.jpg';
@@ -64,10 +64,10 @@ const projects = [
     title: "Kambili Scents",
     category: "E-commerce",
     categoryDetail: "E-commerce / Web Development",
-    tagline: "A modern e-commerce website for Kambili Scents, built to showcase and sell premium fragrances with a clean, elegant, mobile-first shopping experience.",
+    tagline: "A modern e-commerce storefront for Kambili Scents, built for a clean, mobile-first fragrance shopping experience.",
     role: "Full-Stack Web Developer",
     timeline: "2024 — Present",
-    description: "A modern e-commerce website for Kambili Scents, built to showcase and sell premium fragrances with a clean, elegant, mobile-first shopping experience. Engineered with dynamic fragrance collections, media asset management via Cloudinary, Firebase integration, and direct WhatsApp order fulfillment.",
+    description: "Engineered with dynamic fragrance collections, media asset management via Cloudinary, Firebase integration, and direct WhatsApp order fulfillment.",
     functionality: [
       "Product catalogue with scent notes & curated fragrance collections",
       "Cloudinary product image management & responsive mobile layout",
@@ -114,23 +114,20 @@ const HeroProject = ({ project }) => {
   return (
     <article
       ref={tiltRef}
-      className="relative rounded-xl bg-gradient-to-b from-[#052659]/35 to-[#021024] border border-[#5483B3]/35 overflow-hidden transition-all duration-300 hover:border-[#7DA0CA]/60 shadow-xl"
+      className="relative rounded-sm bg-gradient-to-b from-[#052659]/35 to-[#021024] border border-[#5483B3]/35 overflow-hidden transition-all duration-300 hover:border-[#7DA0CA]/60"
       style={{ willChange: 'transform' }}
     >
       {/* Top Editorial Status Bar */}
-      <div className="px-5 sm:px-8 py-3.5 bg-[#052659]/50 border-b border-[#5483B3]/25 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
-        <div className="flex items-center gap-3">
-          <span className="text-[#7DA0CA] uppercase tracking-wider font-medium">
-            {project.category} · {project.categoryDetail}
-          </span>
-        </div>
+      <div className="px-5 sm:px-8 py-3.5 bg-[#052659]/50 border-b border-[#5483B3]/25 flex flex-wrap items-center justify-between gap-3 text-sm">
+        <span className="text-[#7DA0CA] font-medium">
+          {project.category}, {project.categoryDetail}
+        </span>
 
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5 text-xs text-[#3ECF8E]">
-            <span className="w-2 h-2 rounded-full bg-[#3ECF8E] animate-pulse" />
+          <div className="flex items-center gap-1.5 text-sm text-[#3ECF8E]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#3ECF8E]" />
             <span className="font-medium">{project.highlightMetric}</span>
           </div>
-          <span className="text-[#5483B3] hidden sm:inline">|</span>
           <span className="text-[#7DA0CA] hidden sm:inline">{project.timeline}</span>
         </div>
       </div>
@@ -166,8 +163,8 @@ const HeroProject = ({ project }) => {
               {/* Key Deliverables Bulleted List */}
               <div className="space-y-2 mb-6 pt-4 border-t border-[#052659]">
                 {project.functionality.map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-2.5 text-xs text-[#7DA0CA] font-mono leading-snug">
-                    <span className="text-[#3ECF8E] mt-0.5">✔</span>
+                  <div key={idx} className="flex items-start gap-2.5 text-sm text-[#7DA0CA] leading-snug">
+                    <span className="mt-2 w-1 h-1 rounded-full bg-[#3ECF8E] shrink-0" />
                     <span>{item}</span>
                   </div>
                 ))}
@@ -175,14 +172,14 @@ const HeroProject = ({ project }) => {
 
               {/* Tech Stack Strip */}
               <div className="mb-6">
-                <span className="text-[11px] font-mono uppercase tracking-wider text-[#5483B3] block mb-2">
-                  Production Stack:
+                <span className="text-sm text-[#5483B3] block mb-2">
+                  Production stack
                 </span>
                 <div className="flex flex-wrap gap-1.5">
                   {project.tech.map((t) => (
                     <span
                       key={t}
-                      className="px-2.5 py-1 rounded text-xs font-mono bg-[#021024] text-[#C1E8FF] border border-[#5483B3]/30 hover:border-[#7DA0CA] transition-colors"
+                      className="px-2.5 py-1 rounded-sm text-sm bg-[#021024] text-[#C1E8FF] border border-[#5483B3]/30 hover:border-[#7DA0CA] transition-colors"
                     >
                       {t}
                     </span>
@@ -198,10 +195,9 @@ const HeroProject = ({ project }) => {
                   href={project.liveUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-2 min-h-[44px] px-6 py-2.5 rounded text-xs font-mono font-medium text-[#021024] bg-[#C1E8FF] hover:bg-white hover:shadow-lg transition-all flex-1 sm:flex-initial"
+                  className="inline-flex items-center justify-center min-h-[44px] px-6 py-2.5 rounded-sm text-sm font-medium text-[#021024] bg-[#C1E8FF] hover:bg-white transition-colors flex-1 sm:flex-initial"
                 >
-                  <span>Visit Production Marketplace</span>
-                  <ArrowUpRight size={15} />
+                  Visit the marketplace
                 </a>
               )}
 
@@ -210,11 +206,11 @@ const HeroProject = ({ project }) => {
                   href={project.githubUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-2 min-h-[44px] px-5 py-2.5 rounded text-xs font-mono text-[#7DA0CA] hover:text-[#C1E8FF] bg-[#021024] border border-[#5483B3]/30 hover:border-[#7DA0CA] transition-colors"
+                  className="inline-flex items-center justify-center gap-2 min-h-[44px] px-5 py-2.5 rounded-sm text-sm text-[#7DA0CA] hover:text-[#C1E8FF] bg-[#021024] border border-[#5483B3]/30 hover:border-[#7DA0CA] transition-colors"
                   aria-label={`${project.title} GitHub`}
                 >
                   <Github size={15} />
-                  <span>Source Code</span>
+                  <span>Source code</span>
                 </a>
               )}
             </div>
@@ -234,23 +230,21 @@ const WideSplitProject = ({ project }) => {
   return (
     <article
       ref={tiltRef}
-      className="relative rounded-xl bg-[#052659]/25 border border-[#5483B3]/30 overflow-hidden transition-all duration-300 hover:border-[#7DA0CA]/50"
+      className="relative rounded-sm bg-[#052659]/25 border border-[#5483B3]/30 overflow-hidden transition-all duration-300 hover:border-[#7DA0CA]/50"
       style={{ willChange: 'transform' }}
     >
       {/* Top Meta Bar */}
-      <div className="px-5 sm:px-8 py-3 bg-[#052659]/40 border-b border-[#5483B3]/20 flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+      <div className="px-5 sm:px-8 py-3 bg-[#052659]/40 border-b border-[#5483B3]/20 flex flex-wrap items-center justify-between gap-2 text-sm">
         <div className="flex items-center gap-2.5">
           <span className="text-[#C1E8FF] font-semibold">{project.number}</span>
-          <span className="text-[#5483B3]">/</span>
-          <span className="text-[#7DA0CA] uppercase tracking-wider">
-            {project.category} · {project.categoryDetail}
+          <span className="text-[#7DA0CA]">
+            {project.category}, {project.categoryDetail}
           </span>
         </div>
 
-        <div className="flex items-center gap-2 text-xs text-[#38BDF8]">
+        <div className="flex items-center gap-2 text-sm text-[#38BDF8]">
           <Zap size={13} />
           <span>{project.highlightMetric}</span>
-          <span className="text-[#5483B3] hidden sm:inline">|</span>
           <span className="text-[#7DA0CA] hidden sm:inline">{project.timeline}</span>
         </div>
       </div>
@@ -265,19 +259,19 @@ const WideSplitProject = ({ project }) => {
                 {project.title}
               </h3>
 
-              <p className="text-xs sm:text-sm text-[#7DA0CA] font-medium leading-relaxed mb-3">
+              <p className="text-sm text-[#7DA0CA] font-medium leading-relaxed mb-3">
                 {project.tagline}
               </p>
 
-              <p className="text-xs sm:text-sm text-[#C1E8FF]/80 leading-relaxed mb-5">
+              <p className="text-sm text-[#C1E8FF]/80 leading-relaxed mb-5">
                 {project.description}
               </p>
 
               {/* Deliverables */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-5">
                 {project.functionality.map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-2 text-xs text-[#7DA0CA] font-mono">
-                    <span className="text-[#38BDF8] mt-0.5">▪</span>
+                  <div key={idx} className="flex items-start gap-2 text-sm text-[#7DA0CA]">
+                    <span className="mt-2 w-1 h-1 rounded-full bg-[#38BDF8] shrink-0" />
                     <span>{item}</span>
                   </div>
                 ))}
@@ -288,7 +282,7 @@ const WideSplitProject = ({ project }) => {
                 {project.tech.map((t) => (
                   <span
                     key={t}
-                    className="px-2.5 py-1 rounded text-xs font-mono bg-[#021024] text-[#7DA0CA] border border-[#5483B3]/25"
+                    className="px-2.5 py-1 rounded-sm text-sm bg-[#021024] text-[#7DA0CA] border border-[#5483B3]/25"
                   >
                     {t}
                   </span>
@@ -303,10 +297,9 @@ const WideSplitProject = ({ project }) => {
                   href={project.liveUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-2 min-h-[40px] px-5 py-2 rounded text-xs font-mono font-medium text-[#021024] bg-[#C1E8FF] hover:bg-white transition-colors"
+                  className="inline-flex items-center justify-center min-h-[40px] px-5 py-2 rounded-sm text-sm font-medium text-[#021024] bg-[#C1E8FF] hover:bg-white transition-colors"
                 >
-                  <span>Live Platform</span>
-                  <ArrowUpRight size={14} />
+                  Live platform
                 </a>
               )}
 
@@ -315,7 +308,7 @@ const WideSplitProject = ({ project }) => {
                   href={project.githubUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-2 min-h-[40px] px-4 py-2 rounded text-xs font-mono text-[#7DA0CA] hover:text-[#C1E8FF] bg-[#021024] border border-[#5483B3]/30 hover:border-[#7DA0CA] transition-colors"
+                  className="inline-flex items-center justify-center gap-2 min-h-[40px] px-4 py-2 rounded-sm text-sm text-[#7DA0CA] hover:text-[#C1E8FF] bg-[#021024] border border-[#5483B3]/30 hover:border-[#7DA0CA] transition-colors"
                 >
                   <Github size={14} />
                   <span>Code</span>
@@ -345,21 +338,20 @@ const CommercialCard = ({ project }) => {
   return (
     <article
       ref={tiltRef}
-      className="rounded-xl bg-[#052659]/20 border border-[#5483B3]/25 overflow-hidden flex flex-col justify-between transition-all duration-300 hover:border-[#7DA0CA]/50 h-full"
+      className="rounded-sm bg-[#052659]/20 border border-[#5483B3]/25 overflow-hidden flex flex-col justify-between transition-all duration-300 hover:border-[#7DA0CA]/50 h-full"
       style={{ willChange: 'transform' }}
     >
       <div>
         {/* Meta Bar */}
-        <div className="px-5 py-3 bg-[#052659]/40 border-b border-[#5483B3]/20 flex items-center justify-between gap-2 text-xs font-mono">
+        <div className="px-5 py-3 bg-[#052659]/40 border-b border-[#5483B3]/20 flex items-center justify-between gap-2 text-sm">
           <div className="flex items-center gap-2 truncate">
             <span className="text-[#C1E8FF] font-semibold">{project.number}</span>
-            <span className="text-[#5483B3]">/</span>
-            <span className="text-[#7DA0CA] uppercase tracking-wider text-[11px] truncate">
-              {project.category} · Client Project
+            <span className="text-[#7DA0CA] truncate">
+              {project.category}, Client project
             </span>
           </div>
 
-          <span className="px-2 py-0.5 rounded bg-[#021024] text-[#F59E0B] border border-[#5483B3]/30 text-[11px] shrink-0 font-medium">
+          <span className="px-2 py-0.5 rounded-sm bg-[#021024] text-[#F59E0B] border border-[#5483B3]/30 text-xs shrink-0 font-medium">
             {project.highlightMetric}
           </span>
         </div>
@@ -378,18 +370,18 @@ const CommercialCard = ({ project }) => {
             {project.title}
           </h3>
 
-          <p className="text-xs sm:text-sm text-[#7DA0CA] font-medium leading-relaxed mb-3">
+          <p className="text-sm text-[#7DA0CA] font-medium leading-relaxed mb-3">
             {project.tagline}
           </p>
 
-          <p className="text-xs sm:text-sm text-[#C1E8FF]/75 leading-relaxed mb-4">
+          <p className="text-sm text-[#C1E8FF]/75 leading-relaxed mb-4">
             {project.description}
           </p>
 
           <div className="space-y-1.5 mb-5">
             {project.functionality.map((item, idx) => (
-              <div key={idx} className="flex items-start gap-2 text-xs text-[#7DA0CA] font-mono leading-tight">
-                <span className="text-[#F59E0B] mt-0.5">▪</span>
+              <div key={idx} className="flex items-start gap-2 text-sm text-[#7DA0CA] leading-tight">
+                <span className="mt-1.5 w-1 h-1 rounded-full bg-[#F59E0B] shrink-0" />
                 <span>{item}</span>
               </div>
             ))}
@@ -399,7 +391,7 @@ const CommercialCard = ({ project }) => {
             {project.tech.map((t) => (
               <span
                 key={t}
-                className="px-2 py-0.5 rounded text-[11px] font-mono bg-[#021024] text-[#7DA0CA] border border-[#5483B3]/25"
+                className="px-2 py-0.5 rounded-sm text-xs bg-[#021024] text-[#7DA0CA] border border-[#5483B3]/25"
               >
                 {t}
               </span>
@@ -410,7 +402,7 @@ const CommercialCard = ({ project }) => {
 
       {/* Footer Actions */}
       <div className="p-5 sm:p-6 pt-4 border-t border-[#052659] flex items-center justify-between">
-        <span className="text-[11px] font-mono text-[#5483B3]">{project.timeline}</span>
+        <span className="text-sm text-[#5483B3]">{project.timeline}</span>
 
         <div className="flex items-center gap-2">
           {project.liveUrl && (
@@ -418,10 +410,9 @@ const CommercialCard = ({ project }) => {
               href={project.liveUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 min-h-[38px] px-4 py-2 rounded text-xs font-mono font-medium text-[#021024] bg-[#C1E8FF] hover:bg-white hover:shadow-md transition-all"
+              className="inline-flex items-center gap-2 min-h-[38px] px-4 py-2 rounded-sm text-sm font-medium text-[#021024] bg-[#C1E8FF] hover:bg-white transition-colors"
             >
-              <span>View Live Site</span>
-              <ArrowUpRight size={14} />
+              View live site
             </a>
           )}
         </div>
@@ -437,21 +428,20 @@ const WeatherCard = ({ project }) => {
   return (
     <article
       ref={tiltRef}
-      className="rounded-xl bg-[#052659]/20 border border-[#5483B3]/25 overflow-hidden flex flex-col justify-between transition-all duration-300 hover:border-[#7DA0CA]/50 h-full"
+      className="rounded-sm bg-[#052659]/20 border border-[#5483B3]/25 overflow-hidden flex flex-col justify-between transition-all duration-300 hover:border-[#7DA0CA]/50 h-full"
       style={{ willChange: 'transform' }}
     >
       <div>
         {/* Meta Bar */}
-        <div className="px-5 py-3 bg-[#052659]/40 border-b border-[#5483B3]/20 flex items-center justify-between gap-2 text-xs font-mono">
+        <div className="px-5 py-3 bg-[#052659]/40 border-b border-[#5483B3]/20 flex items-center justify-between gap-2 text-sm">
           <div className="flex items-center gap-2 truncate">
             <span className="text-[#C1E8FF] font-semibold">{project.number}</span>
-            <span className="text-[#5483B3]">/</span>
-            <span className="text-[#7DA0CA] uppercase tracking-wider text-[11px] truncate">
+            <span className="text-[#7DA0CA] truncate">
               {project.category}
             </span>
           </div>
 
-          <span className="px-2 py-0.5 rounded bg-[#021024] text-[#F59E0B] border border-[#5483B3]/30 text-[11px] shrink-0 font-medium">
+          <span className="px-2 py-0.5 rounded-sm bg-[#021024] text-[#F59E0B] border border-[#5483B3]/30 text-xs shrink-0 font-medium">
             {project.highlightMetric}
           </span>
         </div>
@@ -470,18 +460,18 @@ const WeatherCard = ({ project }) => {
             {project.title}
           </h3>
 
-          <p className="text-xs sm:text-sm text-[#7DA0CA] font-medium leading-relaxed mb-3">
+          <p className="text-sm text-[#7DA0CA] font-medium leading-relaxed mb-3">
             {project.tagline}
           </p>
 
-          <p className="text-xs sm:text-sm text-[#C1E8FF]/75 leading-relaxed mb-4">
+          <p className="text-sm text-[#C1E8FF]/75 leading-relaxed mb-4">
             {project.description}
           </p>
 
           <div className="space-y-1.5 mb-5">
             {project.functionality.map((item, idx) => (
-              <div key={idx} className="flex items-start gap-2 text-xs text-[#7DA0CA] font-mono leading-tight">
-                <span className="text-[#F59E0B] mt-0.5">▪</span>
+              <div key={idx} className="flex items-start gap-2 text-sm text-[#7DA0CA] leading-tight">
+                <span className="mt-1.5 w-1 h-1 rounded-full bg-[#F59E0B] shrink-0" />
                 <span>{item}</span>
               </div>
             ))}
@@ -491,7 +481,7 @@ const WeatherCard = ({ project }) => {
             {project.tech.map((t) => (
               <span
                 key={t}
-                className="px-2 py-0.5 rounded text-[11px] font-mono bg-[#021024] text-[#7DA0CA] border border-[#5483B3]/25"
+                className="px-2 py-0.5 rounded-sm text-xs bg-[#021024] text-[#7DA0CA] border border-[#5483B3]/25"
               >
                 {t}
               </span>
@@ -502,7 +492,7 @@ const WeatherCard = ({ project }) => {
 
       {/* Footer Actions */}
       <div className="p-5 sm:p-6 pt-4 border-t border-[#052659] flex items-center justify-between">
-        <span className="text-[11px] font-mono text-[#5483B3]">{project.timeline}</span>
+        <span className="text-sm text-[#5483B3]">{project.timeline}</span>
 
         <div className="flex items-center gap-2">
           {project.liveUrl && (
@@ -510,10 +500,9 @@ const WeatherCard = ({ project }) => {
               href={project.liveUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono font-medium text-[#021024] bg-[#C1E8FF] hover:bg-white transition-colors"
+              className="inline-flex items-center px-3 py-1.5 rounded-sm text-sm font-medium text-[#021024] bg-[#C1E8FF] hover:bg-white transition-colors"
             >
-              <span>Live App</span>
-              <ArrowUpRight size={13} />
+              Live app
             </a>
           )}
 
@@ -522,7 +511,7 @@ const WeatherCard = ({ project }) => {
               href={project.githubUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center p-1.5 rounded text-[#7DA0CA] hover:text-[#C1E8FF] bg-[#021024] border border-[#5483B3]/30 hover:border-[#7DA0CA] transition-colors"
+              className="inline-flex items-center p-1.5 rounded-sm text-[#7DA0CA] hover:text-[#C1E8FF] bg-[#021024] border border-[#5483B3]/30 hover:border-[#7DA0CA] transition-colors"
               aria-label={`${project.title} GitHub`}
             >
               <Github size={14} />
@@ -583,7 +572,7 @@ const Projects = () => {
               Featured Projects
             </h2>
           </div>
-          <p className="text-xs sm:text-sm font-mono text-[#7DA0CA] mt-3 md:mt-0 max-w-md header-item">
+          <p className="text-sm text-[#7DA0CA] mt-3 md:mt-0 max-w-md header-item">
             Production platforms, client storefronts, and web systems.
           </p>
         </div>

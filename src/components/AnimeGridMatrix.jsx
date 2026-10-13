@@ -71,14 +71,14 @@ const AnimeGridMatrix = () => {
   }, [cols]);
 
   return (
-    <div className="rounded-lg bg-[#052659]/25 border border-[#5483B3]/25 p-5 sm:p-7 overflow-hidden">
-      
+    <div className="rounded-sm bg-[#052659]/25 border border-[#5483B3]/25 p-5 sm:p-7 overflow-hidden">
+
       {/* Component Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-5 border-b border-[#052659]">
         <div>
-          <div className="flex items-center gap-2 text-xs font-mono text-[#5483B3] uppercase tracking-wider mb-1">
+          <div className="flex items-center gap-2 text-sm text-[#5483B3] mb-1">
             <Sparkles size={14} className="text-[#7DA0CA]" />
-            <span>Anime.js Interactive Canvas</span>
+            <span>Anime.js interactive canvas</span>
           </div>
           <h3 className="text-base sm:text-lg font-bold text-[#C1E8FF] tracking-tight">
             Staggered Ripple Matrix
@@ -86,7 +86,7 @@ const AnimeGridMatrix = () => {
         </div>
 
         {/* Preset Controls */}
-        <div className="flex items-center gap-1.5 font-mono text-xs">
+        <div className="flex items-center gap-1.5 text-sm">
           <button
             onClick={() => {
               setActivePreset('center');
@@ -126,7 +126,7 @@ const AnimeGridMatrix = () => {
         </div>
       </div>
 
-      <p className="text-xs text-[#7DA0CA] mb-5 leading-relaxed font-mono">
+      <p className="text-sm text-[#7DA0CA] mb-5 leading-relaxed">
         Interactive 2D matrix demonstrating Anime.js grid-based stagger calculations. Click any tile to generate a ripple wave:
       </p>
 

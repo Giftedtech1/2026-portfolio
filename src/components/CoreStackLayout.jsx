@@ -283,25 +283,22 @@ const CoreStackLayout = () => {
   };
 
   return (
-    <div className="rounded-lg bg-[#052659]/25 border border-[#5483B3]/25 p-5 sm:p-7 overflow-hidden">
+    <div className="rounded-sm bg-[#052659]/25 border border-[#5483B3]/25 p-5 sm:p-7 overflow-hidden">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-5 border-b border-[#052659]">
-        <div>
-          <div className="flex items-center gap-2 text-xs font-mono text-[#5483B3] uppercase tracking-wider mb-1">
-            <Layers size={14} className="text-[#7DA0CA]" />
-
-          </div>
+        <div className="flex items-center gap-2.5">
+          <Layers size={16} className="text-[#7DA0CA]" />
           <h3 className="text-base sm:text-lg font-bold text-[#C1E8FF] tracking-tight">
             Core Stack
           </h3>
         </div>
-        <div className="flex items-center gap-1.5 font-mono text-xs">
+        <div className="flex items-center gap-1.5 text-sm">
           {MODES.map((mode) => (
             <button
               key={mode}
               id={`core-stack-mode-${mode}`}
               onClick={() => handleModeClick(mode)}
-              className={`relative overflow-hidden px-2.5 py-1.5 rounded border transition-all flex items-center gap-1.5 ${activeMode === mode
-                ? 'bg-[#052659] text-[#C1E8FF] border-[#38BDF8]/60 shadow-sm'
+              className={`relative overflow-hidden px-2.5 py-1.5 rounded-sm border transition-all flex items-center gap-1.5 ${activeMode === mode
+                ? 'bg-[#052659] text-[#C1E8FF] border-[#38BDF8]/60'
                 : 'text-[#7DA0CA] border-[#052659] hover:border-[#5483B3]/40 hover:text-[#C1E8FF]'
                 }`}
             >
@@ -369,7 +366,7 @@ const CoreStackLayout = () => {
         .core-stack-card:hover { border-color: var(--card-color); }
         .card-icon-wrap { width: 36px; height: 36px; margin-bottom: 10px; transition: width 0.4s ease, height 0.4s ease, margin 0.3s ease; }
         .card-name { font-size: 13px; font-family: 'JetBrains Mono', 'Fira Code', monospace; font-weight: 700; color: var(--card-color); line-height: 1.2; }
-        .card-role { font-size: 10px; font-family: 'JetBrains Mono', 'Fira Code', monospace; color: #7DA0CA; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.08em; }
+        .card-role { font-size: 12px; color: #7DA0CA; margin-top: 2px; }
         .card-desc { font-size: 11px; color: #7DA0CA; margin-top: 8px; line-height: 1.55; display: none; }
         @media (max-width: 500px) {
           .mode-grid3 { grid-template-columns: repeat(2, 1fr); }

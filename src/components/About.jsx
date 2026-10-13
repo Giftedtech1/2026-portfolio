@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { FileDown, Terminal, MapPin, Play, ShieldCheck, Sparkles } from 'lucide-react';
+import { FileDown, Terminal } from 'lucide-react';
 import { animate, stagger } from 'animejs';
 import { useAnimeCardTilt } from '../hooks/useAnimeCardTilt';
 import { useMagneticHover } from '../hooks/useMagneticHover';
@@ -72,8 +72,8 @@ const About = () => {
                 About & Philosophy
               </h2>
             </div>
-            <p className="text-xs sm:text-sm font-mono text-[#7DA0CA] mt-3 md:mt-0 max-w-md reveal-item">
-              web developer focused on modern web standards, resilient architectures, and real-world utility.
+            <p className="text-sm text-[#7DA0CA] mt-3 md:mt-0 max-w-md reveal-item">
+              A web developer focused on modern web standards, resilient architectures, and real-world utility.
             </p>
           </div>
         </ScrollReveal>
@@ -85,8 +85,8 @@ const About = () => {
           <ScrollReveal direction="up" distance={32} delayStep={100} duration={800} ease="outExpo" threshold={0.15} className="lg:col-span-7">
             <div>
               {/* Developer Profile Header Badge */}
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 p-4 sm:p-5 rounded-2xl bg-[#052659]/40 border border-[#5483B3]/30 mb-8 reveal-item">
-                <div className="relative w-20 h-20 sm:w-24 sm:h-24 shrink-0 rounded-xl overflow-hidden border-2 border-[#38BDF8]/40 shadow-lg">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 p-4 sm:p-5 rounded-sm bg-[#052659]/40 border border-[#5483B3]/30 mb-8 reveal-item">
+                <div className="relative w-20 h-20 sm:w-24 sm:h-24 shrink-0 rounded-sm overflow-hidden border border-[#38BDF8]/40">
                   <img
                     src={meImg}
                     alt="Ogunleye Precious"
@@ -96,17 +96,11 @@ const About = () => {
                 </div>
 
                 <div className="space-y-1.5 flex-1">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[11px] font-mono text-[#38BDF8] font-semibold tracking-wider">
-                      VERIFIED DEVELOPER
-                    </span>
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  </div>
                   <h3 className="text-lg sm:text-xl font-bold text-[#C1E8FF]">
-                    Ogunleye Precious <span className="text-sm font-mono text-[#7DA0CA] font-normal">(@Giftedtech)</span>
+                    Ogunleye Precious <span className="text-sm text-[#7DA0CA] font-normal">(@Giftedtech)</span>
                   </h3>
-                  <p className="text-xs sm:text-sm font-mono text-[#7DA0CA]">
-                    Software Developer ·
+                  <p className="text-sm text-[#7DA0CA]">
+                    Software Developer
                   </p>
                 </div>
               </div>
@@ -114,7 +108,7 @@ const About = () => {
               {/* Narrative Content */}
               <div className="space-y-5 sm:space-y-6 text-sm sm:text-base md:text-lg text-[#7DA0CA] font-normal leading-relaxed reveal-item">
                 <p>
-                  I am <span className="text-[#C1E8FF] font-semibold">Ogunleye Precious</span> (known across the tech community as <span className="text-[#C1E8FF] font-mono font-medium">Giftedtech</span>). I am a frontend and full-stack developer working remotely with teams worldwide, dedicated to building software that works reliably in production.
+                  I am <span className="text-[#C1E8FF] font-semibold">Ogunleye Precious</span> (known across the tech community as <span className="text-[#C1E8FF] font-medium">Giftedtech</span>). I am a frontend and full-stack developer working remotely with teams worldwide, dedicated to building software that works reliably in production.
                 </p>
 
                 <p className="reveal-item">
@@ -135,11 +129,11 @@ const About = () => {
                     ref={cvRef}
                     href="/resume.pdf"
                     download
-                    className="inline-flex items-center justify-center gap-2.5 min-h-[44px] px-5 py-2.5 rounded text-xs font-mono font-medium text-[#C1E8FF] bg-[#052659] border border-[#5483B3]/40 hover:border-[#7DA0CA] hover:bg-[#083375] transition-colors w-full sm:w-auto"
+                    className="inline-flex items-center justify-center gap-2.5 min-h-[44px] px-5 py-2.5 rounded-sm text-sm font-medium text-[#C1E8FF] bg-[#052659] border border-[#5483B3]/40 hover:border-[#7DA0CA] hover:bg-[#083375] transition-colors w-full sm:w-auto"
                     style={{ willChange: 'transform' }}
                   >
                     <FileDown size={16} />
-                    <span>Download Curriculum Vitae (PDF)</span>
+                    <span>Download résumé (PDF)</span>
                   </a>
                 </div>
               </div>
@@ -150,22 +144,22 @@ const About = () => {
           <div className="lg:col-span-5">
             <div
               ref={panelRef}
-              className="rounded-lg bg-[#052659]/30 border border-[#5483B3]/25 p-5 sm:p-6 md:p-8 space-y-5 sm:space-y-6"
+              className="rounded-sm bg-[#052659]/30 border border-[#5483B3]/25 p-5 sm:p-6 md:p-8 space-y-5 sm:space-y-6"
               style={{ willChange: 'transform' }}
             >
-              <div className="flex items-center gap-2 text-xs font-mono text-[#5483B3] uppercase tracking-wider pb-3 border-b border-[#052659]">
+              <div className="flex items-center gap-2 text-sm text-[#5483B3] pb-3 border-b border-[#052659]">
                 <Terminal size={14} className="text-[#7DA0CA]" />
-                <span>Core Principles</span>
+                <span>Core principles</span>
               </div>
 
               <div ref={principlesRef} className="space-y-5 sm:space-y-6">
                 {principles.map((p, idx) => (
                   <div key={idx} className="principle-item">
-                    <h4 className="text-xs sm:text-sm font-mono font-semibold text-[#C1E8FF] mb-1.5 flex items-center gap-2">
-                      <span className="text-[#5483B3]">0{idx + 1}.</span>
+                    <h4 className="text-sm font-semibold text-[#C1E8FF] mb-1.5 flex items-center gap-2">
+                      <span className="text-[#5483B3]">0{idx + 1}</span>
                       {p.title}
                     </h4>
-                    <p className="text-xs text-[#7DA0CA] leading-relaxed">
+                    <p className="text-sm text-[#7DA0CA] leading-relaxed">
                       {p.description}
                     </p>
                   </div>

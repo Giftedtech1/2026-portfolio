@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X, Github, Linkedin, ArrowUpRight } from 'lucide-react';
+import { Menu, X, Github, Linkedin } from 'lucide-react';
 import { animate, stagger } from 'animejs';
 
 /** Thin scroll-progress bar at bottom of navbar */
@@ -136,7 +136,7 @@ const Navbar = () => {
               <a
                 key={link.name}
                 href={link.href}
-                className="text-xs uppercase tracking-widest font-mono text-[#7DA0CA] hover:text-[#C1E8FF] transition-colors py-1 relative group"
+                className="text-sm text-[#7DA0CA] hover:text-[#C1E8FF] transition-colors py-1 relative group"
               >
                 {link.name}
                 <span className="absolute bottom-0 left-0 w-0 h-px bg-[#5483B3] transition-all duration-300 group-hover:w-full" />
@@ -166,7 +166,7 @@ const Navbar = () => {
             </a>
             <a
               href="#contact"
-              className="ml-2 px-3 py-1.5 rounded text-xs font-mono font-medium text-[#C1E8FF] bg-[#052659] border border-[#5483B3]/40 hover:border-[#7DA0CA] hover:bg-[#083375] transition-all min-h-[36px] inline-flex items-center"
+              className="ml-2 px-3.5 py-1.5 rounded-sm text-sm font-medium text-[#C1E8FF] bg-[#052659] border border-[#5483B3]/40 hover:border-[#7DA0CA] hover:bg-[#083375] transition-all min-h-[36px] inline-flex items-center"
             >
               Get in touch
             </a>
@@ -202,10 +202,9 @@ const Navbar = () => {
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
-                className="mobile-nav-link flex items-center justify-between min-h-[44px] px-3 py-2 rounded font-mono text-base text-[#C1E8FF] hover:bg-[#052659]/60 hover:text-white transition-colors"
+                className="mobile-nav-link flex items-center min-h-[44px] px-3 py-2 rounded font-medium text-base text-[#C1E8FF] hover:bg-[#052659]/60 hover:text-white transition-colors"
               >
-                <span>{link.name}</span>
-                <span className="text-xs text-[#5483B3]">→</span>
+                {link.name}
               </a>
             ))}
           </nav>
@@ -218,11 +217,10 @@ const Navbar = () => {
                 target="_blank"
                 rel="noreferrer"
                 onClick={() => setIsOpen(false)}
-                className="mobile-nav-link flex items-center justify-center gap-2 min-h-[44px] px-3 py-2 rounded font-mono text-xs text-[#7DA0CA] hover:text-[#C1E8FF] bg-[#052659]/40 border border-[#5483B3]/25 hover:border-[#7DA0CA]/50 transition-colors"
+                className="mobile-nav-link flex items-center justify-center gap-2 min-h-[44px] px-3 py-2 rounded text-sm text-[#7DA0CA] hover:text-[#C1E8FF] bg-[#052659]/40 border border-[#5483B3]/25 hover:border-[#7DA0CA]/50 transition-colors"
               >
                 <Github size={16} />
                 <span>GitHub</span>
-                <ArrowUpRight size={12} className="text-[#5483B3]" />
               </a>
 
               <a
@@ -230,21 +228,19 @@ const Navbar = () => {
                 target="_blank"
                 rel="noreferrer"
                 onClick={() => setIsOpen(false)}
-                className="mobile-nav-link flex items-center justify-center gap-2 min-h-[44px] px-3 py-2 rounded font-mono text-xs text-[#7DA0CA] hover:text-[#C1E8FF] bg-[#052659]/40 border border-[#5483B3]/25 hover:border-[#7DA0CA]/50 transition-colors"
+                className="mobile-nav-link flex items-center justify-center gap-2 min-h-[44px] px-3 py-2 rounded text-sm text-[#7DA0CA] hover:text-[#C1E8FF] bg-[#052659]/40 border border-[#5483B3]/25 hover:border-[#7DA0CA]/50 transition-colors"
               >
                 <Linkedin size={16} />
                 <span>LinkedIn</span>
-                <ArrowUpRight size={12} className="text-[#5483B3]" />
               </a>
             </div>
 
             <a
               href="#contact"
               onClick={() => setIsOpen(false)}
-              className="mobile-nav-link flex items-center justify-center gap-2 w-full min-h-[44px] px-4 py-2.5 rounded font-mono text-xs font-semibold text-[#021024] bg-[#C1E8FF] hover:bg-white transition-colors"
+              className="mobile-nav-link flex items-center justify-center w-full min-h-[44px] px-4 py-2.5 rounded font-semibold text-sm text-[#021024] bg-[#C1E8FF] hover:bg-white transition-colors"
             >
-              <span>Get in touch</span>
-              <span>→</span>
+              Get in touch
             </a>
           </div>
         </div>

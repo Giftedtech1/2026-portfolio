@@ -18,7 +18,7 @@ const InteractiveLab = () => {
                 Interactive Labs
               </h2>
             </div>
-            <p className="text-xs sm:text-sm font-mono text-[#7DA0CA] mt-3 md:mt-0 max-w-md reveal-item">
+            <p className="text-sm text-[#7DA0CA] mt-3 md:mt-0 max-w-md reveal-item">
               Interactive micro-interactions, layout physics, and system simulations.
             </p>
           </div>

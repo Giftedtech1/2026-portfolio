@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { Briefcase, Calendar, CheckCircle2 } from 'lucide-react';
+import { Calendar } from 'lucide-react';
 import { animate, stagger } from 'animejs';
 import { useAnimeCardTilt } from '../hooks/useAnimeCardTilt';
 import ScrollReveal from './ScrollReveal';
@@ -74,7 +74,7 @@ const ExperienceCard = ({ exp }) => {
   return (
     <div
       ref={cardRef}
-      className="rounded-lg bg-[#052659]/25 border border-[#5483B3]/25 p-5 sm:p-6 md:p-8 hover:border-[#7DA0CA]/40 transition-colors"
+      className="rounded-sm bg-[#052659]/25 border border-[#5483B3]/25 p-5 sm:p-6 md:p-8 hover:border-[#7DA0CA]/40 transition-colors"
       style={{ willChange: 'transform' }}
     >
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4 pb-5 mb-5 border-b border-[#052659]">
@@ -82,33 +82,32 @@ const ExperienceCard = ({ exp }) => {
           <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-[#C1E8FF] tracking-tight mb-1">
             {exp.role}
           </h3>
-          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-mono text-[#7DA0CA]">
+          <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1 text-sm text-[#7DA0CA]">
             <span className="text-[#C1E8FF] font-semibold">{exp.company}</span>
-            <span className="text-[#5483B3]">·</span>
-            <span>{exp.location}</span>
+            <span>— {exp.location}</span>
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 text-xs font-mono">
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#021024] text-[#C1E8FF] border border-[#5483B3]/30 text-[11px] sm:text-xs">
+        <div className="flex flex-wrap items-center gap-2 text-sm">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-sm bg-[#021024] text-[#C1E8FF] border border-[#5483B3]/30 text-xs sm:text-sm">
             <Calendar size={12} className="text-[#7DA0CA]" />
             <span>{exp.dates}</span>
           </span>
-          <span className="px-2 py-1 rounded bg-[#052659] text-[#7DA0CA] border border-[#5483B3]/20 text-[11px] sm:text-xs">
+          <span className="px-2 py-1 rounded-sm bg-[#052659] text-[#7DA0CA] border border-[#5483B3]/20 text-xs sm:text-sm">
             {exp.type}
           </span>
         </div>
       </div>
 
-      <p className="text-xs sm:text-sm md:text-base text-[#7DA0CA] leading-relaxed mb-5 font-normal">
+      <p className="text-sm sm:text-base text-[#7DA0CA] leading-relaxed mb-5 font-normal">
         {exp.description}
       </p>
 
       {/* Technical Highlights — staggered left slide */}
       <div ref={highlightsRef} className="space-y-2 mb-5">
         {exp.highlights.map((highlight, hIdx) => (
-          <div key={hIdx} className="flex items-start gap-2 text-xs sm:text-sm text-[#C1E8FF]/85 font-mono leading-normal highlight-row">
-            <span className="text-[#5483B3] mt-0.5 shrink-0">▸</span>
+          <div key={hIdx} className="flex items-start gap-2.5 text-sm text-[#C1E8FF]/85 leading-normal highlight-row">
+            <span className="mt-2 w-1 h-1 rounded-full bg-[#5483B3] shrink-0" />
             <span>{highlight}</span>
           </div>
         ))}
@@ -116,11 +115,11 @@ const ExperienceCard = ({ exp }) => {
 
       {/* Technologies strip */}
       <div className="pt-4 border-t border-[#052659]/60 flex flex-wrap items-center gap-1.5">
-        <span className="text-[11px] sm:text-xs font-mono text-[#5483B3] mr-1">Technologies:</span>
+        <span className="text-sm text-[#5483B3] mr-1">Technologies:</span>
         {exp.technologies.map((tech) => (
           <span
             key={tech}
-            className="px-2 py-0.5 rounded text-[11px] sm:text-xs font-mono bg-[#021024] text-[#7DA0CA] border border-[#5483B3]/20 hover:border-[#7DA0CA]/40 hover:text-[#C1E8FF] transition-colors cursor-default"
+            className="px-2 py-0.5 rounded-sm text-sm bg-[#021024] text-[#7DA0CA] border border-[#5483B3]/20 hover:border-[#7DA0CA]/40 hover:text-[#C1E8FF] transition-colors cursor-default"
           >
             {tech}
           </span>
@@ -143,7 +142,7 @@ const Experience = () => {
                 Work Experience
               </h2>
             </div>
-            <p className="text-xs sm:text-sm font-mono text-[#7DA0CA] mt-3 md:mt-0 max-w-md reveal-item">
+            <p className="text-sm text-[#7DA0CA] mt-3 md:mt-0 max-w-md reveal-item">
               A track record of shipping real products, collaborating with clients, and delivering performant web interfaces.
             </p>
           </div>
