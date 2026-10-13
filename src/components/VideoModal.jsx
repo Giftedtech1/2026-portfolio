@@ -95,17 +95,14 @@ const VideoModal = ({ isOpen, onClose, videoSrc }) => {
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-sm sm:max-w-md max-h-[90vh] bg-[#052659] border border-[#5483B3]/40 rounded-2xl overflow-hidden shadow-2xl flex flex-col"
+        className="relative w-full max-w-sm sm:max-w-md max-h-[90vh] bg-[#052659] border border-[#5483B3]/40 rounded-sm overflow-hidden flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Header Bar */}
         <div className="flex items-center justify-between px-4 py-3 bg-[#021024]/80 border-b border-[#5483B3]/25 z-20">
-          <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-xs font-mono text-[#C1E8FF] font-medium tracking-wide">
-              Giftedtech · Video Reel
-            </span>
-          </div>
+          <span className="text-sm text-[#C1E8FF] font-medium">
+            Video reel
+          </span>
           <button
             type="button"
             onClick={onClose}
@@ -177,17 +174,13 @@ const VideoModal = ({ isOpen, onClose, videoSrc }) => {
                 <button
                   type="button"
                   onClick={handleRestart}
-                  className="p-1.5 rounded-md hover:bg-white/10 transition-colors text-xs font-mono text-[#7DA0CA] hover:text-[#C1E8FF]"
+                  className="p-1.5 rounded-md hover:bg-white/10 transition-colors text-[#7DA0CA] hover:text-[#C1E8FF]"
                   aria-label="Restart video"
                   title="Restart"
                 >
                   <RotateCcw size={14} />
                 </button>
               </div>
-
-              <span className="text-[11px] font-mono text-[#7DA0CA]">
-                1080 × 1350 · MP4
-              </span>
             </div>
           </div>
         </div>

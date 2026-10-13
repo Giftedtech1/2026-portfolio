@@ -203,7 +203,6 @@ const CoreStackLayout = () => {
   const containerRef = useRef(null);
   const layoutRef = useRef(null);
   const [activeMode, setActiveMode] = useState('grid2');
-  const [timerKey, setTimerKey] = useState(0);
 
   const switchMode = (mode) => {
     setActiveMode(mode);
@@ -242,44 +241,8 @@ const CoreStackLayout = () => {
     };
   }, []);
 
-  // Auto-switch between 2-Col, 3-Col, and List every 8 seconds
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const interval = setInterval(() => {
-      setActiveMode((prev) => {
-        const currentIndex = MODES.indexOf(prev);
-        const nextIndex = (currentIndex + 1) % MODES.length;
-        const nextMode = MODES[nextIndex];
-
-        // Trigger FLIP layout transition
-        const el = containerRef.current;
-        const layout = layoutRef.current;
-        if (el && layout) {
-          try {
-            layout.update(({ root }) => {
-              Object.values(MODE_CLASSES).forEach((cls) => root.classList.remove(cls));
-              root.classList.add(MODE_CLASSES[nextMode]);
-            }, {
-              duration: 700,
-              ease: 'outExpo',
-              delay: stagger(60),
-            });
-          } catch (_) {
-            // Safe fallback
-          }
-        }
-        return nextMode;
-      });
-      setTimerKey((k) => k + 1);
-    }, 8000);
-
-    return () => clearInterval(interval);
-  }, [timerKey]);
-
   const handleModeClick = (mode) => {
     switchMode(mode);
-    setTimerKey((k) => k + 1);
   };
 
   return (
@@ -304,15 +267,6 @@ const CoreStackLayout = () => {
             >
               {MODE_LABELS[mode].icon}
               <span>{MODE_LABELS[mode].label}</span>
-              {activeMode === mode && (
-                <span className="absolute bottom-0 inset-x-0 h-[2px] bg-[#38BDF8]/30 overflow-hidden">
-                  <span
-                    key={`${activeMode}-${timerKey}`}
-                    className="block h-full bg-gradient-to-r from-[#38BDF8] to-[#818CF8]"
-                    style={{ animation: 'progressFill 8s linear infinite' }}
-                  />
-                </span>
-              )}
             </button>
           ))}
         </div>

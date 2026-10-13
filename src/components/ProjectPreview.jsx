@@ -22,7 +22,7 @@ const ProjectPreview = ({
 }) => {
   const containerRef = useRef(null);
   const viewportRef = useRef(null);
-  const [inView, setInView] = useState(false);
+  const [inView, setInView] = useState(priority);
   const [isLiveEnabled, setIsLiveEnabled] = useState(false);
   const [isInteractive, setIsInteractive] = useState(false);
   const [iframeLoaded, setIframeLoaded] = useState(false);
@@ -44,13 +44,7 @@ const ProjectPreview = ({
   // 1. Viewport intersection observer (lazy loading)
   useEffect(() => {
     const el = containerRef.current;
-    if (!el) return;
-
-    // If priority (e.g. Hero project), activate viewport early
-    if (priority) {
-      setInView(true);
-      return;
-    }
+    if (!el || priority) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -111,7 +105,7 @@ const ProjectPreview = ({
   }, [isLiveEnabled, iframeLoaded, iframeFailed]);
 
   // Handle clicking the preview to open the live site
-  const handlePreviewClick = (e) => {
+  const handlePreviewClick = () => {
     if (isInteractive) return; // Allow interaction with the iframe
     if (project.liveUrl) {
       window.open(project.liveUrl, '_blank', 'noopener,noreferrer');

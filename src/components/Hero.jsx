@@ -37,43 +37,9 @@ const Hero = () => {
   const [isMuted, setIsMuted] = useState(true);
   const [progress, setProgress] = useState(0);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
-  const [timerKey, setTimerKey] = useState(0);
-
-  // Auto-switch between portrait and video reel every 8 seconds
-  useEffect(() => {
-    if (isVideoModalOpen) return;
-
-    const interval = setInterval(() => {
-      setActiveTab((prev) => {
-        const next = prev === 'portrait' ? 'video' : 'portrait';
-        if (next === 'video') {
-          setTimeout(() => {
-            if (videoRef.current) {
-              videoRef.current.muted = true;
-              setIsMuted(true);
-              videoRef.current
-                .play()
-                .then(() => setIsPlaying(true))
-                .catch(() => setIsPlaying(false));
-            }
-          }, 150);
-        } else {
-          if (videoRef.current) {
-            videoRef.current.pause();
-            setIsPlaying(false);
-          }
-        }
-        return next;
-      });
-      setTimerKey((k) => k + 1);
-    }, 8000);
-
-    return () => clearInterval(interval);
-  }, [isVideoModalOpen]);
 
   const handleTabSwitch = (tab) => {
     setActiveTab(tab);
-    setTimerKey((k) => k + 1);
     if (tab === 'video') {
       setTimeout(() => {
         if (videoRef.current) {
@@ -415,22 +381,14 @@ const Hero = () => {
                       <Video size={12} />
                       <span>Reel</span>
                     </button>
-
-                    {/* 8s auto-switch countdown line */}
-                    <div className="absolute bottom-0 inset-x-0 h-[2px] bg-[#052659]/80 overflow-hidden">
-                      <div
-                        key={`${activeTab}-${timerKey}`}
-                        className="h-full bg-[#38BDF8]"
-                        style={{
-                          animation: 'progressFill 8s linear infinite',
-                        }}
-                      />
-                    </div>
                   </div>
                 </div>
 
                 {/* Main Media Showcase (4:5 Aspect Ratio) */}
-                <div className="relative aspect-[4/5] w-full rounded-xl overflow-hidden bg-[#021024] border border-[#5483B3]/20 group/media">
+                <div
+                  className="relative aspect-[4/5] w-full rounded-xl overflow-hidden bg-[#021024] border border-[#5483B3]/20 group/media isolate"
+                  style={{ transform: 'translateZ(0)' }}
+                >
 
                   {/* Mode A: Portrait (me.jpeg) */}
                   {activeTab === 'portrait' ? (

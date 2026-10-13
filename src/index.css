@@ -230,9 +230,3 @@ html.lenis, html.lenis body {
   }
 }
 
-/* 8-Second Switcher Countdown */
-@keyframes progressFill {
-  0% { width: 0%; }
-  100% { width: 100%; }
-}
-
