@@ -1,10 +1,10 @@
 import React, { useRef, useEffect } from 'react';
 import { Github, Zap } from 'lucide-react';
 import { animate, stagger } from 'animejs';
-import hand2handImg from '../assets/hand2hand.jpg';
-import littleBeginningsImg from '../assets/little_beginnings.jpg';
-import kambiliImg from '../assets/kambili.jpg';
-import weatherImg from '../assets/weather_app.png';
+import hand2handImg from '../assets/hand2hand.webp';
+import littleBeginningsImg from '../assets/little_beginnings.webp';
+import kambiliImg from '../assets/kambili.webp';
+import weatherImg from '../assets/weather_app.webp';
 import { useAnimeCardTilt } from '../hooks/useAnimeCardTilt';
 import ScrollReveal from './ScrollReveal';
 import ProjectPreview from './ProjectPreview';

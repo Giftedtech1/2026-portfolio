@@ -22,6 +22,7 @@ const Footer = () => {
 
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[#7DA0CA]">
             <a href="#work" className="hover:text-[#C1E8FF] transition-colors min-h-[36px] flex items-center">Work</a>
+            <a href="#services" className="hover:text-[#C1E8FF] transition-colors min-h-[36px] flex items-center">Services</a>
             <a href="#experience" className="hover:text-[#C1E8FF] transition-colors min-h-[36px] flex items-center">Experience</a>
             <a href="#skills" className="hover:text-[#C1E8FF] transition-colors min-h-[36px] flex items-center">Skills</a>
             <a href="#interactive-lab" className="hover:text-[#C1E8FF] transition-colors min-h-[36px] flex items-center">Labs</a>

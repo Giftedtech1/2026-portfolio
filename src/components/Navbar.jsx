@@ -88,6 +88,7 @@ const Navbar = () => {
 
   const desktopNavLinks = [
     { name: 'Work', href: '#work' },
+    { name: 'Services', href: '#services' },
     { name: 'Experience', href: '#experience' },
     { name: 'Skills', href: '#skills' },
     { name: 'Labs', href: '#interactive-lab' },
@@ -97,6 +98,7 @@ const Navbar = () => {
 
   const mobileNavLinks = [
     { name: 'Work', href: '#work' },
+    { name: 'Services', href: '#services' },
     { name: 'Experience', href: '#experience' },
     { name: 'Skills', href: '#skills' },
     { name: 'Labs', href: '#interactive-lab' },
