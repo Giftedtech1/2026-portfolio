@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://2026-portfolio-theta-three.vercel.app/sitemap.xml
+Sitemap: https://www.giftedisprecious.com/sitemap.xml

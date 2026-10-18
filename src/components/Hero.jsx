@@ -120,9 +120,11 @@ const Hero = () => {
           c.style.display = 'inline-block';
         });
 
+        // Start partially visible (not 0) so the headline paints immediately
+        // and counts as the Largest Contentful Paint without waiting for the stagger.
         headlineAnim = animate(chars, {
           y: [14, 0],
-          opacity: [0, 1],
+          opacity: [0.35, 1],
           delay: stagger(18),
           duration: 700,
           ease: 'outExpo',
@@ -134,7 +136,7 @@ const Hero = () => {
 
     // Phase 2: subtitle entrance
     subAnim = animate(subtitle, {
-      opacity: [0, 1],
+      opacity: [0.35, 1],
       translateY: [16, 0],
       duration: 600,
       delay: 250,
@@ -187,6 +189,7 @@ const Hero = () => {
           className="w-full h-full object-cover object-center opacity-55 sm:opacity-65 scale-105 transition-transform duration-1000"
           fetchPriority="high"
           loading="eager"
+          decoding="async"
         />
         {/* Balanced gradients so the background details shine through clearly while keeping text crisp */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#021024]/50 via-[#021024]/55 to-[#021024]/90" />
@@ -396,6 +399,9 @@ const Hero = () => {
                       <img
                         src={meImg}
                         alt="Ogunleye Precious - Giftedtech"
+                        width="932"
+                        height="932"
+                        decoding="async"
                         className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
                       />
 
