@@ -6,6 +6,7 @@ import Hero from './components/Hero';
 // Everything below the fold is split into separate chunks so the first
 // bundle only contains what's needed to paint the hero.
 const Projects = lazy(() => import('./components/Projects'));
+const Services = lazy(() => import('./components/Services'));
 const Experience = lazy(() => import('./components/Experience'));
 const Skills = lazy(() => import('./components/Skills'));
 const InteractiveLab = lazy(() => import('./components/InteractiveLab'));
@@ -109,6 +110,7 @@ function App() {
           <Hero />
           <Suspense fallback={<div className="min-h-screen" aria-hidden="true" />}>
             <Projects />
+            <Services />
             <Experience />
             <Skills />
             <InteractiveLab />

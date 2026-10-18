@@ -213,6 +213,9 @@ const Hero = () => {
 
             {/* Headline */}
             <div className="max-w-2xl mb-5 sm:mb-6 pt-2">
+              <p className="mb-3 text-sm sm:text-base font-medium tracking-wide" style={{ color: '#7DA0CA' }}>
+                Web Developer in Lagos, Nigeria
+              </p>
               <h1
                 ref={headlineRef}
                 id="hero-headline"
@@ -233,8 +236,8 @@ const Hero = () => {
                 className="mt-5 text-base sm:text-lg md:text-xl leading-relaxed font-normal"
                 style={{ color: '#94A3B8' }}
               >
-                Frontend / Full-Stack Developer based in Lagos, Nigeria, building modern
-                web applications, digital products, and user-focused experiences with{' '}
+                Website and web app developer based in Lagos, Nigeria, building fast
+                websites, web applications, and digital products for businesses with{' '}
                 <span style={{ color: '#61DAFB', fontWeight: 500 }}>React</span>,{' '}
                 <span style={{ color: '#3B82F6', fontWeight: 500 }}>TypeScript</span>, and robust architectures.
               </p>
