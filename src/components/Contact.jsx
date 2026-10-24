@@ -4,6 +4,7 @@ import { useForm, ValidationError } from '@formspree/react';
 import { useAnimeCardTilt } from '../hooks/useAnimeCardTilt';
 import { useMagneticHover } from '../hooks/useMagneticHover';
 import ScrollReveal from './ScrollReveal';
+import { EMAIL, WHATSAPP_DISPLAY, whatsappLink } from '../lib/contact';
 
 const Contact = () => {
   const [state, handleSubmit] = useForm("xanjvnyy");
@@ -19,12 +20,12 @@ const Contact = () => {
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 pb-6 border-b border-[#052659]">
             <div>
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#C1E8FF] tracking-tight reveal-item">
-                Have something worth building? <br className="hidden sm:block" />
+                Ready for a website that works? <br className="hidden sm:block" />
                 <span className="text-[#7DA0CA]">Let's talk.</span>
               </h2>
             </div>
             <p className="text-sm text-[#7DA0CA] mt-3 md:mt-0 max-w-md reveal-item">
-              Currently available for software engineering roles, full-stack product builds, and technical collaborations.
+              Tell me about your business and what you need. I reply within 24 hours, and fastest on WhatsApp.
             </p>
           </div>
         </ScrollReveal>
@@ -38,26 +39,20 @@ const Contact = () => {
               <div className="space-y-3 sm:space-y-4">
                 {[
                   {
-                    label: "Email Inquiry",
-                    value: "Giftedisprecious@gmail.com",
-                    href: "mailto:Giftedisprecious@gmail.com",
-                  },
-                  {
-                    label: "Direct / WhatsApp",
-                    value: "+234 905 946 4257",
-                    href: "https://wa.me/2349059464257",
+                    label: "WhatsApp (fastest)",
+                    value: WHATSAPP_DISPLAY,
+                    href: whatsappLink(),
                     external: true,
                   },
                   {
-                    label: "Professional Profile",
+                    label: "Email",
+                    value: EMAIL,
+                    href: `mailto:${EMAIL}`,
+                  },
+                  {
+                    label: "LinkedIn",
                     value: "linkedin.com/in/giftedtech-precious",
                     href: "https://www.linkedin.com/in/giftedtech-precious-a46421249",
-                    external: true,
-                  },
-                  {
-                    label: "GitHub Profile",
-                    value: "github.com/Giftedtech1",
-                    href: "https://github.com/Giftedtech1",
                     external: true,
                   },
                 ].map((channel) => (
@@ -81,7 +76,7 @@ const Contact = () => {
                   <MapPin size={12} className="text-[#5483B3]" />
                   Based in Lagos (GMT+1)
                 </span>
-                <span>Available globally</span>
+                <span>Clients across Nigeria &amp; remote</span>
               </div>
             </div>
           </ScrollReveal>
@@ -98,14 +93,14 @@ const Contact = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   <div className="space-y-1.5 sm:space-y-2">
                     <label htmlFor="name" className="block text-sm text-[#7DA0CA]">
-                      Your name or organization
+                      Your name or business
                     </label>
                     <input
                       id="name"
                       type="text"
                       name="name"
                       required
-                      placeholder="e.g. Alex Morgan"
+                      placeholder="e.g. Ada, Ada's Kitchen"
                       className="w-full min-h-[44px] px-4 py-2.5 sm:py-3 rounded-sm bg-[#021024] border border-[#5483B3]/30 text-[#C1E8FF] placeholder-[#5483B3] text-base sm:text-sm focus:outline-none focus:border-[#7DA0CA] transition-colors"
                     />
                     <ValidationError prefix="Name" field="name" errors={state.errors} />
@@ -120,7 +115,7 @@ const Contact = () => {
                       type="email"
                       name="email"
                       required
-                      placeholder="alex@company.com"
+                      placeholder="you@yourbusiness.com"
                       className="w-full min-h-[44px] px-4 py-2.5 sm:py-3 rounded-sm bg-[#021024] border border-[#5483B3]/30 text-[#C1E8FF] placeholder-[#5483B3] text-base sm:text-sm focus:outline-none focus:border-[#7DA0CA] transition-colors"
                     />
                     <ValidationError prefix="Email" field="email" errors={state.errors} />
@@ -129,14 +124,14 @@ const Contact = () => {
 
                 <div className="space-y-1.5 sm:space-y-2">
                   <label htmlFor="message" className="block text-sm text-[#7DA0CA]">
-                    Project details or inquiry
+                    What does your business do, and what do you need?
                   </label>
                   <textarea
                     id="message"
                     name="message"
                     required
                     rows={4}
-                    placeholder="Tell me about the product scope, timelines, or role..."
+                    placeholder="e.g. I run a bakery in Lekki and want a website where customers can see our menu and order on WhatsApp."
                     className="w-full min-h-[100px] px-4 py-2.5 sm:py-3 rounded-sm bg-[#021024] border border-[#5483B3]/30 text-[#C1E8FF] placeholder-[#5483B3] text-base sm:text-sm focus:outline-none focus:border-[#7DA0CA] transition-colors resize-none"
                   />
                   <ValidationError prefix="Message" field="message" errors={state.errors} />

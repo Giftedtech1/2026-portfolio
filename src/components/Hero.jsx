@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  Github,
-  Linkedin,
   Play,
   Pause,
   Volume2,
@@ -12,6 +10,7 @@ import {
 } from 'lucide-react';
 import { animate, stagger, splitText } from 'animejs';
 import { useMagneticHover } from '../hooks/useMagneticHover';
+import { whatsappLink } from '../lib/contact';
 import AnimeCard from './AnimeCard';
 import VideoModal from './VideoModal';
 
@@ -174,7 +173,7 @@ const Hero = () => {
     };
   }, []);
 
-  const techStack = ['React', 'TypeScript', 'Next.js', 'Tailwind', 'Supabase', 'Docker', 'Kubernetes', 'AWS', 'Azure'];
+  const recentClients = ['Little Beginnings Academy', 'Kambili Scents', 'Hand2Hand marketplace'];
 
   return (
     <section
@@ -219,15 +218,15 @@ const Hero = () => {
               <h1
                 ref={headlineRef}
                 id="hero-headline"
-                className="text-[clamp(2.4rem,6.5vw,4.8rem)] font-extrabold tracking-tight leading-[1.1] font-display"
-                aria-label="Building useful products for the web."
+                className="text-[clamp(2.4rem,6.5vw,4.25rem)] font-extrabold tracking-tight leading-[1.1] font-display"
+                aria-label="Websites that bring your business more customers."
                 style={{
                   fontFamily: '"Outfit", "Plus Jakarta Sans", sans-serif',
                   color: '#C1E8FF',
                   letterSpacing: '-0.03em',
                 }}
               >
-                Building useful products for the web.
+                Websites that bring your business more customers.
               </h1>
 
               {/* Subtitle */}
@@ -236,20 +235,22 @@ const Hero = () => {
                 className="mt-5 text-base sm:text-lg md:text-xl leading-relaxed font-normal"
                 style={{ color: '#94A3B8' }}
               >
-                Website and web app developer based in Lagos, Nigeria, building fast
-                websites, web applications, and digital products for businesses with{' '}
-                <span style={{ color: '#61DAFB', fontWeight: 500 }}>React</span>,{' '}
-                <span style={{ color: '#3B82F6', fontWeight: 500 }}>TypeScript</span>, and robust architectures.
+                I build fast, mobile-first websites and online stores for businesses in
+                Lagos and across Nigeria: easy to find on Google, quick on mobile data,
+                with enquiries and orders coming{' '}
+                <span style={{ color: '#C1E8FF', fontWeight: 500 }}>straight to your WhatsApp</span>.
               </p>
             </div>
 
             {/* CTA Buttons */}
             <div className="flex flex-wrap items-center gap-3 sm:gap-4 pt-2 hero-content-item">
-              {/* Primary — View Work */}
+              {/* Primary — WhatsApp */}
               <a
                 ref={primaryCTARef}
-                href="#work"
-                id="hero-view-work-btn"
+                href={whatsappLink()}
+                target="_blank"
+                rel="noreferrer"
+                id="hero-whatsapp-btn"
                 className="inline-flex items-center justify-center min-h-[48px] px-6 py-3 rounded-sm text-sm font-semibold transition-colors flex-1 sm:flex-initial"
                 style={{
                   background: '#38BDF8',
@@ -259,14 +260,14 @@ const Hero = () => {
                 onMouseEnter={e => { e.currentTarget.style.background = '#7DD3FC'; }}
                 onMouseLeave={e => { e.currentTarget.style.background = '#38BDF8'; }}
               >
-                View my work
+                Chat on WhatsApp
               </a>
 
-              {/* Secondary — Contact */}
+              {/* Secondary — Pricing */}
               <a
                 ref={secondaryCTARef}
-                href="#contact"
-                id="hero-contact-btn"
+                href="#pricing"
+                id="hero-pricing-btn"
                 className="inline-flex items-center justify-center min-h-[48px] px-6 py-3 rounded-sm text-sm font-medium transition-all flex-1 sm:flex-initial"
                 style={{
                   color: '#C1E8FF',
@@ -283,70 +284,15 @@ const Hero = () => {
                   e.currentTarget.style.background = 'rgba(5,38,89,0.5)';
                 }}
               >
-                Get in touch
+                See packages &amp; prices
               </a>
-
-              {/* Social Links */}
-              <div className="flex items-center gap-2 pt-1 sm:pt-0 w-full sm:w-auto">
-                <a
-                  href="https://github.com/Giftedtech1"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-2 min-h-[44px] flex-1 sm:flex-initial px-3.5 py-2 rounded-sm text-sm transition-all"
-                  style={{
-                    color: '#94A3B8',
-                    background: 'rgba(5,38,89,0.30)',
-                    border: '1px solid rgba(84,131,179,0.22)',
-                  }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.color = '#C1E8FF';
-                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)';
-                    e.currentTarget.style.background = 'rgba(30,30,40,0.55)';
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.color = '#94A3B8';
-                    e.currentTarget.style.borderColor = 'rgba(84,131,179,0.22)';
-                    e.currentTarget.style.background = 'rgba(5,38,89,0.30)';
-                  }}
-                  aria-label="GitHub Profile"
-                >
-                  <Github size={15} />
-                  <span>GitHub</span>
-                </a>
-
-                <a
-                  href="https://www.linkedin.com/in/giftedtech-precious-a46421249"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-2 min-h-[44px] flex-1 sm:flex-initial px-3.5 py-2 rounded-sm text-sm transition-all"
-                  style={{
-                    color: '#94A3B8',
-                    background: 'rgba(5,38,89,0.30)',
-                    border: '1px solid rgba(84,131,179,0.22)',
-                  }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.color = '#0A66C2';
-                    e.currentTarget.style.borderColor = 'rgba(10,102,194,0.45)';
-                    e.currentTarget.style.background = 'rgba(10,102,194,0.08)';
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.color = '#94A3B8';
-                    e.currentTarget.style.borderColor = 'rgba(84,131,179,0.22)';
-                    e.currentTarget.style.background = 'rgba(5,38,89,0.30)';
-                  }}
-                  aria-label="LinkedIn Profile"
-                >
-                  <Linkedin size={15} />
-                  <span>LinkedIn</span>
-                </a>
-              </div>
             </div>
 
-            {/* Tech Strip */}
+            {/* Trust Strip */}
             <div className="mt-10 sm:mt-12 pt-6 border-t hero-content-item" style={{ borderColor: 'rgba(84,131,179,0.18)' }}>
-              <p className="text-sm leading-relaxed" style={{ color: '#5483B3' }}>
-                <span style={{ color: '#7DA0CA' }}>Core stack: </span>
-                {techStack.join(', ')}
+              <p className="text-sm leading-relaxed" style={{ color: '#7DA0CA' }}>
+                <span style={{ color: '#5483B3' }}>Recent work: </span>
+                {recentClients.join(' · ')}
               </p>
             </div>
 
@@ -422,7 +368,7 @@ const Hero = () => {
                           </span>
                         </div>
                         <p className="text-sm text-[#7DA0CA]">
-                          Full-Stack Developer, Cloud & React Architecture
+                          Web developer for growing businesses
                         </p>
                       </div>
                     </div>
@@ -521,7 +467,7 @@ const Hero = () => {
                 {/* Card Sub-Footer Status */}
                 <div className="pt-3 mt-2 flex items-center gap-1.5 text-sm text-[#7DA0CA]">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                  <span>Remote, available worldwide</span>
+                  <span>Lagos-based · clients across Nigeria &amp; remote</span>
                 </div>
 
               </AnimeCard>

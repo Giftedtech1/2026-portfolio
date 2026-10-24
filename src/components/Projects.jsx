@@ -15,44 +15,44 @@ const projects = [
     number: "01",
     title: "Hand2Hand Marketplace",
     category: "Marketplace",
-    categoryDetail: "Full-Stack Commerce Platform",
-    tagline: "Peer-to-peer gadget & electronics commerce platform engineered for Nigerian consumers.",
-    role: "Lead Frontend & Product Engineer",
+    categoryDetail: "My own product",
+    tagline: "A Nigerian marketplace where people buy and sell gadgets safely, designed for phones and mobile data.",
+    role: "Founder & Developer",
     timeline: "2024 — Present",
-    description: "A responsive digital marketplace connecting verified gadget buyers and sellers across Nigeria. Architected with a mobile-first philosophy, real-time database synchronization, state-driven search filtering, and client-side image compression for low-bandwidth environments.",
+    description: "I designed and built Hand2Hand end to end: listings, search, buyer-seller chat and verification. It's built for how Nigerians actually shop online, mostly on phones, often on slow or expensive data.",
     functionality: [
-      "Real-time catalog filtering by device condition, price, and location",
-      "Streamlined buyer-to-seller inquiry and verification flow",
-      "Client-side image compression saving >60% bandwidth on mobile uploads",
-      "Optimistic UI state management ensuring instantaneous user feedback"
+      "Buyers can filter gadgets by condition, price and location in real time",
+      "Simple enquiry and verification flow between buyers and sellers",
+      "Photo uploads shrunk on the phone first, using over 60% less data",
+      "Pages respond instantly, even on a weak connection"
     ],
-    tech: ["React", "JavaScript", "Supabase", "Tailwind CSS", "REST APIs"],
+    tech: ["React", "Supabase", "Tailwind CSS"],
     liveUrl: "https://hand2hand.com.ng/",
-    githubUrl: "https://github.com/Giftedtech1",
+    githubUrl: null,
     featured: true,
-    highlightMetric: "Active Production",
+    highlightMetric: "Launching January 2027",
     image: hand2handImg,
     badgeColor: "#3ECF8E"
   },
   {
     id: "little-beginnings",
     number: "02",
-    title: "Little Beginnings Platform",
+    title: "Little Beginnings Academy",
     category: "Client Project",
-    categoryDetail: "Institutional Platform & Admissions Gateway",
-    tagline: "High-performance web platform & admissions gateway for modern early childhood education.",
-    role: "Frontend Engineer & UI Designer",
+    categoryDetail: "School website",
+    tagline: "A school website that answers parents' questions and turns visits into tour bookings.",
+    role: "Designer & Developer",
     timeline: "2024",
-    description: "Engineered an accessible, high-performance web platform for Little Beginnings Academy. Designed to deliver clear program information to prospective parents, streamline enrollment inquiries, and maintain 98+ Google Lighthouse scores across performance and accessibility.",
+    description: "Little Beginnings needed a site that gives prospective parents everything they need to choose the school, and makes it easy to take the next step. Parents can explore programmes and the academic calendar, then book a tour or send an enquiry online.",
     functionality: [
-      "Online student inquiry and tour scheduling intake system",
-      "Structured curriculum & academic calendar architecture",
-      "Mobile-first responsive layouts achieving sub-second initial load times",
-      "Strict semantic HTML conforming to WCAG AA accessibility standards"
+      "Online enquiry and tour booking, straight to the school",
+      "Clear programme, curriculum and calendar pages for parents",
+      "Loads in under a second on mobile",
+      "98+ Google Lighthouse score for speed, SEO and accessibility"
     ],
-    tech: ["React", "JavaScript", "Tailwind CSS", "Vite", "SEO Architecture"],
+    tech: ["React", "Tailwind CSS", "SEO"],
     liveUrl: "https://little-beginnings.org",
-    githubUrl: "https://github.com/Giftedtech1",
+    githubUrl: null,
     featured: true,
     highlightMetric: "98+ Lighthouse",
     image: littleBeginningsImg,
@@ -63,22 +63,22 @@ const projects = [
     number: "03",
     title: "Kambili Scents",
     category: "E-commerce",
-    categoryDetail: "E-commerce / Web Development",
-    tagline: "A modern e-commerce storefront for Kambili Scents, built for a clean, mobile-first fragrance shopping experience.",
-    role: "Full-Stack Web Developer",
+    categoryDetail: "Online store",
+    tagline: "An online fragrance store where customers browse, choose and order on WhatsApp in a few taps.",
+    role: "Designer & Developer",
     timeline: "2024 — Present",
-    description: "Engineered with dynamic fragrance collections, media asset management via Cloudinary, Firebase integration, and direct WhatsApp order fulfillment.",
+    description: "Kambili Scents sells through WhatsApp, so the store sends every order straight there, with bank transfer as a payment option. The owner manages products and photos without touching code.",
     functionality: [
-      "Product catalogue with scent notes & curated fragrance collections",
-      "Cloudinary product image management & responsive mobile layout",
-      "Seamless WhatsApp direct checkout & bank payment options",
-      "Mobile-first navigation with dynamic product content presentation"
+      "Product catalogue with scent notes and curated collections",
+      "One-tap WhatsApp ordering and bank payment options",
+      "Owner-managed product photos and listings",
+      "Designed for shopping on a phone"
     ],
-    tech: ["HTML", "CSS", "JavaScript", "Firebase", "Cloudinary"],
+    tech: ["JavaScript", "Firebase", "Cloudinary"],
     liveUrl: "https://kambili.com.ng",
     githubUrl: null,
     featured: true,
-    highlightMetric: "Active Storefront",
+    highlightMetric: "Live store",
     image: kambiliImg,
     badgeColor: "#F59E0B"
   },
@@ -87,21 +87,21 @@ const projects = [
     number: "04",
     title: "The Sky Today",
     category: "Web App",
-    categoryDetail: "Ambient Meteorological Dashboard",
-    tagline: "Minimalist, distraction-free weather application engineered for instant clarity.",
+    categoryDetail: "Side project",
+    tagline: "A clean, clutter-free weather app.",
     role: "Creator & Developer",
     timeline: "2023",
-    description: "A stripped-back weather application built to eliminate clutter. Integrates meteorological APIs with dynamic atmospheric states, search auto-complete, and responsive layout engineering.",
+    description: "A small side project: live weather for any city, with search suggestions and a look that shifts with the conditions outside.",
     functionality: [
-      "Dynamic weather states with subtle contextual palette shifts",
-      "Local micro-forecasts with humidity, wind speed, and visibility metrics",
-      "Lightweight bundle size optimized for rapid mobile parsing"
+      "Live forecasts with humidity, wind and visibility",
+      "City search with suggestions",
+      "Lightweight and quick on mobile"
     ],
     tech: ["React", "Weather API", "Tailwind CSS"],
     liveUrl: "https://giftedtech1.github.io/gifted-s-weather-app",
     githubUrl: "https://github.com/Giftedtech1/gifted-s-weather-app",
     featured: false,
-    highlightMetric: "Fast API Integration",
+    highlightMetric: "Side project",
     image: weatherImg,
     badgeColor: "#F59E0B"
   }
@@ -173,7 +173,7 @@ const HeroProject = ({ project }) => {
               {/* Tech Stack Strip */}
               <div className="mb-6">
                 <span className="text-sm text-[#5483B3] block mb-2">
-                  Production stack
+                  Built with
                 </span>
                 <div className="flex flex-wrap gap-1.5">
                   {project.tech.map((t) => (
@@ -299,7 +299,7 @@ const WideSplitProject = ({ project }) => {
                   rel="noreferrer"
                   className="inline-flex items-center justify-center min-h-[40px] px-5 py-2 rounded-sm text-sm font-medium text-[#021024] bg-[#C1E8FF] hover:bg-white transition-colors"
                 >
-                  Live platform
+                  Visit the site
                 </a>
               )}
 
@@ -569,11 +569,11 @@ const Projects = () => {
         <div ref={headerRef} className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 pb-6 border-b border-[#052659]">
           <div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#C1E8FF] tracking-tight header-item">
-              Featured Projects
+              Recent work
             </h2>
           </div>
           <p className="text-sm text-[#7DA0CA] mt-3 md:mt-0 max-w-md header-item">
-            Production platforms, client storefronts, and web systems.
+            Websites and online stores I've built for real businesses, plus my own product.
           </p>
         </div>
 

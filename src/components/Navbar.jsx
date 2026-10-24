@@ -89,9 +89,7 @@ const Navbar = () => {
   const desktopNavLinks = [
     { name: 'Work', href: '#work' },
     { name: 'Services', href: '#services' },
-    { name: 'Experience', href: '#experience' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Labs', href: '#interactive-lab' },
+    { name: 'Pricing', href: '#pricing' },
     { name: 'About', href: '#about' },
     { name: 'Contact', href: '#contact' },
   ];
@@ -99,9 +97,7 @@ const Navbar = () => {
   const mobileNavLinks = [
     { name: 'Work', href: '#work' },
     { name: 'Services', href: '#services' },
-    { name: 'Experience', href: '#experience' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Labs', href: '#interactive-lab' },
+    { name: 'Pricing', href: '#pricing' },
     { name: 'About', href: '#about' },
     { name: 'Contact', href: '#contact' },
   ];
