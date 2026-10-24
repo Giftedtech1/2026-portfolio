@@ -11,16 +11,16 @@ import devVideo from '../assets/geometric-instagram-152-portrait-1080x1350.mp4';
 
 const principles = [
   {
-    title: "Product-Driven Engineering",
-    description: "Writing code is the mechanism; solving real problems for actual users is the goal. I prioritize sensible user flows, fast response cycles, and pragmatic architectures."
+    title: "Built for phones and mobile data",
+    description: "Most of your customers will find you on a phone, often on slow or expensive data. Every site I build loads fast and works well there first."
   },
   {
-    title: "Performance by Default",
-    description: "Especially across emerging markets like Nigeria, lightweight bundles, eager asset optimization, and resilient offline handling make or break the user experience."
+    title: "Made to be found on Google",
+    description: "A website only helps if people can find it. I set up the basics properly from day one: page titles, speed, Google Business links and clean structure."
   },
   {
-    title: "Maintainability & Clean Contracts",
-    description: "I structure component trees and API interfaces with clarity and consistency, so codebases remain straightforward to extend and maintain over time."
+    title: "Easy for you to run",
+    description: "Clear handover, simple updates, and support after launch, with a monthly care plan if you'd rather I handle everything."
   }
 ];
 
@@ -69,11 +69,11 @@ const About = () => {
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 pb-6 border-b border-[#052659]">
             <div>
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#C1E8FF] tracking-tight reveal-item">
-                About & Philosophy
+                About me
               </h2>
             </div>
             <p className="text-sm text-[#7DA0CA] mt-3 md:mt-0 max-w-md reveal-item">
-              A web developer focused on modern web standards, resilient architectures, and real-world utility.
+              A Lagos web developer who cares about one thing: your website bringing you business.
             </p>
           </div>
         </ScrollReveal>
@@ -100,7 +100,7 @@ const About = () => {
                     Ogunleye Precious <span className="text-sm text-[#7DA0CA] font-normal">(@Giftedtech)</span>
                   </h3>
                   <p className="text-sm text-[#7DA0CA]">
-                    Software Developer
+                    Web Developer, Lagos
                   </p>
                 </div>
               </div>
@@ -108,19 +108,19 @@ const About = () => {
               {/* Narrative Content */}
               <div className="space-y-5 sm:space-y-6 text-sm sm:text-base md:text-lg text-[#7DA0CA] font-normal leading-relaxed reveal-item">
                 <p>
-                  I am <span className="text-[#C1E8FF] font-semibold">Ogunleye Precious</span> (known across the tech community as <span className="text-[#C1E8FF] font-medium">Giftedtech</span>). I am a frontend and full-stack developer working remotely with teams worldwide, dedicated to building software that works reliably in production.
+                  I am <span className="text-[#C1E8FF] font-semibold">Ogunleye Precious</span> (known across the tech community as <span className="text-[#C1E8FF] font-medium">Giftedtech</span>). I build websites, online stores and web apps for businesses in Lagos, across Nigeria and abroad.
                 </p>
 
                 <p className="reveal-item">
-                  My background centers on modern frontend engineering with React, JavaScript, and TypeScript, extending seamlessly into backend integrations with Supabase, Firebase, cloud infrastructure (AWS, Azure, Docker, Kubernetes), and REST APIs.
+                  I handle everything from design to launch, so you deal with one person who understands both how your site looks and how it works. I use modern tools (React, Next.js, Supabase), which means your site is fast, secure and easy to grow later.
                 </p>
 
                 <p className="reveal-item">
-                  Rather than viewing code in a vacuum, I approach software with product thinking: What does the user need? How does the interface respond on a mobile device under varying network conditions? What architectural decisions make this platform simple to scale tomorrow?
+                  Before I build anything, I ask what your customers need to do on your site (book, buy, call, or message you) and design everything around making that easy.
                 </p>
 
                 <p className="reveal-item">
-                  From architecting multi-party marketplaces like Hand2Hand to building educational platforms and luxury e-commerce storefronts like Kambili Scents, I thrive on taking products from concept to deployment with meticulous attention to detail.
+                  I've built a school website for Little Beginnings Academy, an online store for Kambili Scents, and my own marketplace, Hand2Hand. Yours could be next.
                 </p>
 
                 {/* CTAs: Resume */}
@@ -149,7 +149,7 @@ const About = () => {
             >
               <div className="flex items-center gap-2 text-sm text-[#5483B3] pb-3 border-b border-[#052659]">
                 <Terminal size={14} className="text-[#7DA0CA]" />
-                <span>Core principles</span>
+                <span>What you can expect</span>
               </div>
 
               <div ref={principlesRef} className="space-y-5 sm:space-y-6">

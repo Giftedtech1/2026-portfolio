@@ -6,25 +6,25 @@ const services = [
   {
     title: 'Business websites',
     description:
-      'Fast, mobile-first websites for businesses and brands in Lagos and across Nigeria, built to load quickly on mobile data and be found on Google.',
+      'A professional site that tells customers who you are, what you offer and how to reach you, built to load fast on mobile data and show up on Google.',
     icon: Globe,
   },
   {
     title: 'Web applications',
     description:
-      'Custom web apps, dashboards and internal tools built with React, TypeScript and Supabase, from first idea to production.',
+      'Booking systems, customer portals, dashboards and internal tools that save your team time, from first idea to launch.',
     icon: LayoutDashboard,
   },
   {
     title: 'E-commerce & marketplaces',
     description:
-      'Online stores and marketplaces with product listings, accounts and real-time updates, like the Hand2Hand marketplace.',
+      'Sell online with a store your customers can browse on their phones, with orders sent to WhatsApp or paid by card or bank transfer.',
     icon: ShoppingBag,
   },
   {
-    title: 'Speed & SEO fixes',
+    title: 'Fix a slow or invisible website',
     description:
-      'Audits and fixes for slow or hard-to-find websites: Lighthouse scores, Core Web Vitals, and technical SEO.',
+      "Already have a site that's slow, broken on phones or hard to find on Google? I'll find what's wrong and fix it.",
     icon: Gauge,
   },
 ];
@@ -39,7 +39,7 @@ const Services = () => {
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 pb-6 border-b border-[#052659]">
             <div>
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#C1E8FF] tracking-tight reveal-item">
-                Web development services
+                What I can build for you
               </h2>
             </div>
             <p className="text-sm text-[#7DA0CA] mt-3 md:mt-0 max-w-md reveal-item">
@@ -72,10 +72,10 @@ const Services = () => {
 
         <div className="mt-10 sm:mt-12">
           <a
-            href="#contact"
+            href="#pricing"
             className="inline-flex items-center justify-center min-h-[48px] px-6 py-3 rounded-sm text-sm font-semibold transition-colors bg-[#38BDF8] text-[#021024] hover:bg-[#7DD3FC]"
           >
-            Start a project
+            See packages &amp; prices
           </a>
         </div>
 
